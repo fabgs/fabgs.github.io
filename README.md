@@ -13,7 +13,21 @@ npm run build    # genera dist/
 npm run preview  # sirve dist/
 ```
 
-Los proyectos de la portada se definen en `src/data/projects.ts`. Los textos de la interfaz están en `src/i18n/ui.ts`.
+## Estructura
+
+```
+src/
+  config/site.ts        nombre, dominio y redes sociales (añade aquí un enlace nuevo)
+  data/projects.ts      proyectos de la portada, con título y descripción por idioma
+  i18n/ui.ts            textos de la interfaz por idioma
+  i18n/utils.ts         utilidades de rutas con prefijo de idioma
+  layouts/Base.astro    <head>, cabecera, pie y redirección por idioma
+  components/           piezas con sus estilos propios (SiteHeader, ProjectCard, ...)
+  pages/                una página por ruta e idioma; solo eligen componente e idioma
+  styles/global.css     tokens de diseño, base y utilidades compartidas (rejilla, .label)
+```
+
+Para añadir un proyecto: una entrada en `src/data/projects.ts`. Para una página nueva: un componente en `components/` que use `Base` y dos ficheros en `pages/` y `pages/es/` que lo rendericen con su idioma. Los textos nuevos van a `src/i18n/ui.ts`, que obliga a definirlos en todos los idiomas.
 
 ## Idiomas
 

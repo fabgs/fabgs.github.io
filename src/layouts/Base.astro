@@ -1,8 +1,11 @@
 ---
 import '@fontsource-variable/archivo';
 import '../styles/global.css';
-import { getRelativeLocaleUrl, getAbsoluteLocaleUrl } from 'astro:i18n';
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { languages, defaultLang, useTranslations, type Lang } from '../i18n/ui';
+import { stripLocale } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -14,8 +17,7 @@ const { lang, title } = Astro.props;
 const t = useTranslations(lang);
 const description = Astro.props.description ?? t('meta.description');
 const langs = Object.keys(languages) as Lang[];
-// Ruta actual sin el prefijo de idioma, para canonical, hreflang y el selector.
-const path = Astro.url.pathname.replace(/^\/es(?=\/|$)/, '') || '/';
+const path = stripLocale(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -42,8 +44,7 @@ const path = Astro.url.pathname.replace(/^\/es(?=\/|$)/, '') || '/';
             try {
               var pref = localStorage.getItem('lang');
               var browser = (navigator.language || '').slice(0, 2).toLowerCase();
-              var want = pref || browser;
-              if (want === 'es') {
+              if ((pref || browser) === 'es') {
                 location.replace('/es' + location.pathname + location.search + location.hash);
               }
             } catch (e) {}
@@ -53,58 +54,10 @@ const path = Astro.url.pathname.replace(/^\/es(?=\/|$)/, '') || '/';
     }
   </head>
   <body>
-    <header class="site-header">
-      <div class="container grid-12">
-        <a class="brand" href={getRelativeLocaleUrl(lang, '')}>fabgs.dev</a>
-        <nav class="nav label">
-          <a href={getRelativeLocaleUrl(lang, '') + '#projects'}>{t('nav.projects')}</a>
-          <a href="https://github.com/fabgs" rel="me noopener" target="_blank">{t('nav.github')}</a>
-          <a href="https://www.linkedin.com/in/fabian-godoy-silvestre" rel="me noopener" target="_blank">
-            {t('nav.linkedin')}
-          </a>
-          <span class="lang-switch" aria-label="Language">
-            {
-              langs.map((l, i) => (
-                <>
-                  {i > 0 && <span class="sep" aria-hidden="true">/</span>}
-                  <a
-                    href={getRelativeLocaleUrl(l, path)}
-                    data-lang={l}
-                    aria-current={l === lang ? 'page' : undefined}
-                    lang={l}
-                  >
-                    {l.toUpperCase()}
-                  </a>
-                </>
-              ))
-            }
-          </span>
-        </nav>
-      </div>
-    </header>
-
+    <SiteHeader lang={lang} path={path} />
     <main class="container">
       <slot />
     </main>
-
-    <footer class="site-footer">
-      <div class="container grid-12 label">
-        <span class="copy">© {new Date().getFullYear()} Fabián Godoy</span>
-        <span class="made">
-          {t('footer.made')} <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
-        </span>
-      </div>
-    </footer>
-
-    <script>
-      // Guarda la elección explícita de idioma para futuras visitas.
-      document.querySelectorAll<HTMLAnchorElement>('.lang-switch a[data-lang]').forEach((a) => {
-        a.addEventListener('click', () => {
-          try {
-            localStorage.setItem('lang', a.dataset.lang ?? '');
-          } catch {}
-        });
-      });
-    </script>
+    <SiteFooter lang={lang} />
   </body>
 </html>

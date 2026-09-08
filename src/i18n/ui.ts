@@ -11,8 +11,7 @@ export const ui = {
   en: {
     'meta.description': 'Portfolio of Fabián Godoy: projects and experiments.',
     'nav.projects': 'Projects',
-    'nav.github': 'GitHub',
-    'nav.linkedin': 'LinkedIn',
+    'nav.language': 'Language',
     'hero.index': '01 — Portfolio',
     'hero.tagline': 'Software developer. A running index of the projects I publish.',
     'hero.mark': 'Guestbook',
@@ -31,8 +30,7 @@ export const ui = {
   es: {
     'meta.description': 'Portfolio de Fabián Godoy: proyectos y experimentos.',
     'nav.projects': 'Proyectos',
-    'nav.github': 'GitHub',
-    'nav.linkedin': 'LinkedIn',
+    'nav.language': 'Idioma',
     'hero.index': '01 — Portfolio',
     'hero.tagline': 'Desarrollador de software. Aquí recojo los proyectos que voy publicando.',
     'hero.mark': 'Libro de visitas',

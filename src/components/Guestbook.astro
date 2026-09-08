@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -11,7 +12,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<Base lang={lang} title={`${t('guestbook.title')} · fabgs.dev`}>
+<Base lang={lang} title={`${t('guestbook.title')} · ${site.domain}`}>
   <section class="hero grid-12">
     <span class="index label">{t('guestbook.index')}</span>
     <h1>{t('guestbook.title')}<em>.</em></h1>
@@ -25,3 +26,23 @@ const t = useTranslations(lang);
     <a href={getRelativeLocaleUrl(lang, '')}>{t('guestbook.back')}</a>
   </p>
 </Base>
+
+<style>
+  .wip {
+    display: inline-block;
+    margin-right: 0.35rem;
+    padding: 0.05rem 0.45rem;
+    background: var(--red);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .back {
+    margin: 2rem 0 0;
+  }
+
+  .back a {
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 0.15rem;
+  }
+</style>

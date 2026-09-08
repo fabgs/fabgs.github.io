@@ -1,5 +1,10 @@
 /* Estilo suizo / constructivista: rejilla estricta, tipografía como
-   elemento gráfico, reglas negras, un único acento rojo, sin adornos. */
+   elemento gráfico, reglas negras, un único acento rojo, sin adornos.
+
+   Aquí viven solo los tokens, la base y las utilidades compartidas.
+   Los estilos de cada pieza (cabecera, tarjeta, pie...) están en su componente. */
+
+/* ---------- tokens ---------- */
 
 :root {
   --paper: #f2f0eb;
@@ -22,6 +27,8 @@
   }
 }
 
+/* ---------- base ---------- */
+
 * {
   box-sizing: border-box;
 }
@@ -32,6 +39,7 @@ html {
   color: var(--ink);
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* el body ocupa toda la ventana y el pie se queda abajo aunque haya poco contenido */
@@ -62,7 +70,7 @@ a {
   color: var(--paper);
 }
 
-/* ---------- rejilla base ---------- */
+/* ---------- utilidades de rejilla ---------- */
 
 .container {
   width: 100%;
@@ -73,7 +81,7 @@ a {
 
 .grid-12 {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--gutter);
 }
 
@@ -85,72 +93,7 @@ a {
   text-transform: uppercase;
 }
 
-/* ---------- cabecera ---------- */
-
-.site-header {
-  border-bottom: var(--rule-w) solid var(--rule);
-}
-
-.site-header .grid-12 {
-  align-items: center;
-  padding: 1.1rem 0;
-}
-
-.brand {
-  grid-column: 1 / span 4;
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: -0.01em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.brand::before {
-  content: '';
-  width: 0.8rem;
-  height: 0.8rem;
-  background: var(--red);
-}
-
-.nav {
-  grid-column: 5 / -1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 2rem;
-}
-
-.nav a {
-  border-bottom: 2px solid transparent;
-  padding-bottom: 0.15rem;
-}
-
-.nav a:hover {
-  border-color: var(--red);
-}
-
-.lang-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-left: 2rem;
-  border-left: 1px solid var(--rule);
-}
-
-.lang-switch .sep {
-  color: var(--red);
-}
-
-.lang-switch a[aria-current='page'] {
-  border-color: var(--red);
-}
-
-.lang-switch a:not([aria-current='page']) {
-  color: var(--ink-soft);
-}
-
-/* ---------- hero ---------- */
+/* ---------- hero (portada y páginas interiores) ---------- */
 
 .hero {
   padding: 5rem 0 4rem;
@@ -168,11 +111,12 @@ a {
   grid-column: 3 / span 8;
   grid-row: 1;
   margin: 0;
-  font-size: clamp(3rem, 9vw, 7.5rem);
+  font-size: clamp(2.75rem, 9vw, 7.5rem);
   font-weight: 800;
   line-height: 0.92;
   letter-spacing: -0.04em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .hero h1 em {
@@ -219,7 +163,7 @@ a {
   color: var(--ink-soft);
 }
 
-/* ---------- secciones ---------- */
+/* ---------- cabeceras de sección ---------- */
 
 .section {
   padding: 3rem 0 0;
@@ -245,171 +189,7 @@ a {
   text-transform: uppercase;
 }
 
-/* ---------- tarjetas de proyecto ---------- */
-
-/* Dos columnas en escritorio. Las reglas se dibujan con bordes en cada
-   tarjeta, así las celdas vacías quedan del color del papel. */
-.projects {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.card {
-  position: relative;
-  display: grid;
-  grid-template-rows: auto auto 1fr auto auto;
-  gap: 1rem;
-  padding: 1.5rem var(--gutter) 1.75rem;
-  border-bottom: 1px solid var(--rule);
-  background: var(--paper);
-  transition: background 0.15s, color 0.15s;
-}
-
-.card:nth-child(odd) {
-  border-right: 1px solid var(--rule);
-}
-
-.card:hover,
-.card:focus-within {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.card .index {
-  color: var(--red);
-}
-
-.card h3 {
-  margin: 0;
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-}
-
-/* enlace estirado: el título es el enlace y su ::after cubre toda la tarjeta */
-.card h3 a::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-.card p {
-  margin: 0;
-  color: var(--ink-soft);
-  line-height: 1.5;
-  max-width: 34rem;
-}
-
-.card:hover p,
-.card:focus-within p {
-  color: inherit;
-  opacity: 0.8;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0.6rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.tags li + li::before {
-  content: '/';
-  margin-right: 0.6rem;
-  color: var(--red);
-}
-
-.card-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 1rem;
-  border-top: 1px solid currentColor;
-}
-
-.card-foot .open {
-  color: var(--red);
-  transition: transform 0.15s;
-}
-
-.card:hover .open {
-  transform: translateX(0.25rem);
-}
-
-/* el botón "Code" se coloca por encima del enlace estirado */
-.btn-code {
-  position: relative;
-  z-index: 1;
-  padding: 0.35rem 0.75rem;
-  border: 2px solid currentColor;
-}
-
-.btn-code:hover {
-  background: var(--red);
-  border-color: var(--red);
-  color: #fff;
-}
-
-/* ---------- página libro de visitas (WIP) ---------- */
-
-.wip {
-  display: inline-block;
-  margin-right: 0.35rem;
-  padding: 0.05rem 0.45rem;
-  background: var(--red);
-  color: #fff;
-  font-weight: 700;
-}
-
-.back {
-  margin: 2rem 0 0;
-}
-
-.back a {
-  border-bottom: 2px solid var(--red);
-  padding-bottom: 0.15rem;
-}
-
-/* ---------- pie ---------- */
-
-.site-footer {
-  margin-top: 6rem;
-  border-top: var(--rule-w) solid var(--rule);
-  padding: 1.25rem 0 2rem;
-  color: var(--ink-soft);
-}
-
-.site-footer .grid-12 {
-  align-items: baseline;
-}
-
-.site-footer .copy {
-  grid-column: 1 / span 6;
-}
-
-.site-footer .made {
-  grid-column: 7 / -1;
-  text-align: right;
-}
-
-.site-footer a {
-  border-bottom: 1px solid currentColor;
-}
-
-/* ---------- móvil ---------- */
-
-@media (max-width: 48rem) {
-  .projects {
-    grid-template-columns: 1fr;
-  }
-
-  .card:nth-child(odd) {
-    border-right: 0;
-  }
-}
+/* ---------- móvil: todo a una columna ---------- */
 
 @media (max-width: 40rem) {
   .hero {
@@ -417,17 +197,22 @@ a {
   }
 
   .hero .index,
-  .section-head .index {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    padding: 0 0 0.75rem;
-  }
-
   .hero h1,
   .hero p,
+  .section-head .index,
   .section-head h2 {
     grid-column: 1 / -1;
     grid-row: auto;
+  }
+
+  .hero .index,
+  .section-head .index {
+    padding: 0 0 0.75rem;
+  }
+
+  .hero p {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
   }
 
   .hero .mark {
@@ -436,28 +221,5 @@ a {
     justify-self: start;
     margin-top: 2rem;
     max-width: 6rem;
-  }
-
-  .site-header .grid-12 {
-    grid-template-columns: 1fr auto;
-  }
-
-  .brand,
-  .nav {
-    grid-column: auto;
-  }
-
-  .nav {
-    gap: 1rem;
-  }
-
-  .lang-switch {
-    padding-left: 1rem;
-  }
-
-  .site-footer .copy,
-  .site-footer .made {
-    grid-column: 1 / -1;
-    text-align: left;
   }
 }

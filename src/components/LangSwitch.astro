@@ -1,0 +1,69 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languages, useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Ruta actual sin prefijo de idioma, para cambiar de idioma sin salir de la página */
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+const langs = Object.keys(languages) as Lang[];
+---
+
+<nav class="lang-switch label" aria-label={t('nav.language')}>
+  {
+    langs.map((l, i) => (
+      <>
+        {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+        <a
+          href={getRelativeLocaleUrl(l, path)}
+          data-lang={l}
+          aria-current={l === lang ? 'page' : undefined}
+          lang={l}
+        >
+          {l.toUpperCase()}
+        </a>
+      </>
+    ))
+  }
+</nav>
+
+<script>
+  // Guarda la elección explícita de idioma; tiene prioridad sobre el idioma del navegador.
+  document.querySelectorAll<HTMLAnchorElement>('.lang-switch a[data-lang]').forEach((a) => {
+    a.addEventListener('click', () => {
+      try {
+        localStorage.setItem('lang', a.dataset.lang ?? '');
+      } catch {}
+    });
+  });
+</script>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .sep {
+    color: var(--red);
+  }
+
+  a {
+    border-bottom: 2px solid transparent;
+    padding-bottom: 0.15rem;
+  }
+
+  a:hover,
+  a[aria-current='page'] {
+    border-color: var(--red);
+  }
+
+  a:not([aria-current='page']) {
+    color: var(--ink-soft);
+  }
+</style>

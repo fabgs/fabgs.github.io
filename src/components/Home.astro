@@ -1,7 +1,9 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import Base from '../layouts/Base.astro';
+import ProjectCard from './ProjectCard.astro';
 import { projects } from '../data/projects';
+import { site } from '../config/site';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -10,10 +12,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
-<Base lang={lang} title="Fabián Godoy · fabgs.dev">
+<Base lang={lang} title={`${site.name} · ${site.domain}`}>
   <section class="hero grid-12">
     <span class="index label">{t('hero.index')}</span>
     <h1>Fabián<br />Godoy<em>.</em></h1>
@@ -31,22 +32,30 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </header>
 
     <div class="projects">
-      {
-        projects.map((p, i) => (
-          <article class="card">
-            <span class="index label">{pad(i + 1)}</span>
-            <h3><a href={p.path}>{p.title[lang]}</a></h3>
-            <p>{p.description[lang]}</p>
-            <ul class="tags label">
-              {p.tags.map((tag) => <li>{tag}</li>)}
-            </ul>
-            <div class="card-foot label">
-              <span class="open">{t('card.open')}</span>
-              <a class="btn-code" href={p.repo} target="_blank" rel="noopener">{t('card.code')}</a>
-            </div>
-          </article>
-        ))
-      }
+      {projects.map((p, i) => <ProjectCard project={p} lang={lang} index={i + 1} />)}
     </div>
   </section>
 </Base>
+
+<style>
+  /* Dos columnas en escritorio, una en móvil. Las reglas verticales se dibujan
+     con bordes en las tarjetas impares para que las celdas vacías queden limpias. */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects > :global(.card:nth-child(odd)) {
+    border-right: 1px solid var(--rule);
+  }
+
+  @media (max-width: 48rem) {
+    .projects {
+      grid-template-columns: 1fr;
+    }
+
+    .projects > :global(.card:nth-child(odd)) {
+      border-right: 0;
+    }
+  }
+</style>
