@@ -28,6 +28,19 @@ const t = useTranslations(lang);
 </Base>
 
 <style>
+  /* Sin cuadrado a la derecha, el titular puede ocupar toda la rejilla.
+     Talla algo menor para que palabras largas como GUESTBOOK no se partan. */
+  .hero h1 {
+    grid-column: 3 / -1;
+    font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+  }
+
+  @media (max-width: 40rem) {
+    .hero h1 {
+      grid-column: 1 / -1;
+    }
+  }
+
   .wip {
     display: inline-block;
     margin-right: 0.35rem;

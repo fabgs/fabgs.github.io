@@ -116,7 +116,6 @@ a {
   line-height: 0.92;
   letter-spacing: -0.04em;
   text-transform: uppercase;
-  overflow-wrap: anywhere;
 }
 
 .hero h1 em {
