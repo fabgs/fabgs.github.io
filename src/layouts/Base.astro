@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/archivo';
 import '../styles/global.css';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 
 const {
   title,
-  description = 'Portfolio de Fabián Godoy: proyectos, experimentos y contacto.',
+  description = 'Portfolio de Fabián Godoy: proyectos y experimentos.',
 } = Astro.props;
 ---
 
@@ -24,9 +25,9 @@ const {
   </head>
   <body>
     <header class="site-header">
-      <div class="container">
+      <div class="container grid-12">
         <a class="brand" href="/">fabgs.dev</a>
-        <nav class="nav">
+        <nav class="nav label">
           <a href="/#proyectos">Proyectos</a>
           <a href="https://github.com/fabgs" rel="me noopener" target="_blank">GitHub</a>
         </nav>
@@ -38,9 +39,11 @@ const {
     </main>
 
     <footer class="site-footer">
-      <div class="container">
-        © {new Date().getFullYear()} Fabián Godoy · Hecho con
-        <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+      <div class="container grid-12 label">
+        <span class="copy">© {new Date().getFullYear()} Fabián Godoy</span>
+        <span class="made">
+          Hecho con <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+        </span>
       </div>
     </footer>
   </body>

@@ -1,23 +1,24 @@
+/* Estilo suizo / constructivista: rejilla estricta, tipografía como
+   elemento gráfico, reglas negras, un único acento rojo, sin adornos. */
+
 :root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --text: #0f172a;
-  --muted: #475569;
-  --border: #e2e8f0;
-  --accent: #0284c7;
-  --accent-soft: #e0f2fe;
+  --paper: #f2f0eb;
+  --ink: #111111;
+  --ink-soft: #4a4a4a;
+  --rule: #111111;
+  --red: #e3211b;
+  --rule-w: 3px;
+  --gutter: 1.5rem;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b1120;
-    --surface: #111a2e;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --border: #1e293b;
-    --accent: #7dd3fc;
-    --accent-soft: #0c2a3f;
+    --paper: #111111;
+    --ink: #f2f0eb;
+    --ink-soft: #b5b2ab;
+    --rule: #f2f0eb;
+    --red: #ff3b30;
   }
 }
 
@@ -26,10 +27,11 @@
 }
 
 html {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
+  font-family: 'Archivo Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -37,129 +39,295 @@ body {
 }
 
 a {
-  color: var(--accent);
+  color: inherit;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+::selection {
+  background: var(--red);
+  color: var(--paper);
 }
+
+/* ---------- rejilla base ---------- */
 
 .container {
-  max-width: 64rem;
+  max-width: 76rem;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 var(--gutter);
 }
 
-.site-header,
-.site-footer {
-  padding: 1.25rem 0;
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
 }
 
-.site-header .container {
-  display: flex;
-  justify-content: space-between;
+/* etiqueta pequeña en mayúsculas, típica de la escuela suiza */
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------- cabecera ---------- */
+
+.site-header {
+  border-bottom: var(--rule-w) solid var(--rule);
+}
+
+.site-header .grid-12 {
   align-items: center;
-  gap: 1rem;
+  padding: 1.1rem 0;
 }
 
 .brand {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-weight: 700;
-  color: var(--text);
+  grid-column: 1 / span 4;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand::before {
+  content: '';
+  width: 0.8rem;
+  height: 0.8rem;
+  background: var(--red);
 }
 
 .nav {
+  grid-column: 7 / -1;
   display: flex;
-  gap: 1.25rem;
-  font-size: 0.95rem;
+  justify-content: flex-end;
+  gap: 2rem;
 }
 
-.site-footer {
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-top: 4rem;
+.nav a {
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.15rem;
 }
+
+.nav a:hover {
+  border-color: var(--red);
+}
+
+/* ---------- hero ---------- */
 
 .hero {
-  padding: 4rem 0 3rem;
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero .index {
+  grid-column: 1 / span 2;
+  color: var(--red);
+  padding-top: 0.6rem;
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin: 0 0 0.5rem;
-  line-height: 1.15;
+  grid-column: 3 / span 10;
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--red);
 }
 
 .hero p {
-  color: var(--muted);
-  font-size: 1.15rem;
-  max-width: 40rem;
-  margin: 0;
+  grid-column: 3 / span 6;
+  margin: 2rem 0 0;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
 }
+
+/* ---------- secciones ---------- */
 
 .section {
-  padding: 2rem 0;
+  padding: 3rem 0 0;
 }
 
-.section h2 {
-  font-size: 1.5rem;
-  margin: 0 0 1.25rem;
+.section-head {
+  align-items: baseline;
+  padding-bottom: 1rem;
+  border-bottom: var(--rule-w) solid var(--rule);
 }
 
-.grid {
+.section-head .index {
+  grid-column: 1 / span 2;
+  color: var(--red);
+}
+
+.section-head h2 {
+  grid-column: 3 / span 10;
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+/* ---------- tarjetas de proyecto ---------- */
+
+.projects {
   display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  /* las reglas de 1px entre celdas se consiguen con el hueco de la rejilla */
+  gap: 1px;
+  background: var(--rule);
+  border-bottom: 1px solid var(--rule);
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  background: var(--surface);
-  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 1rem;
+  padding: 1.5rem var(--gutter) 1.75rem;
+  background: var(--paper);
+  transition: background 0.15s, color 0.15s;
 }
 
-.card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+.card:hover,
+.card:focus-within {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.card .index {
+  color: var(--red);
 }
 
 .card h3 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* enlace estirado: el título es el enlace y su ::after cubre toda la tarjeta */
+.card h3 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }
 
 .card p {
   margin: 0;
-  color: var(--muted);
-  flex: 1;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.card:hover p,
+.card:focus-within p {
+  color: inherit;
+  opacity: 0.8;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0 0.6rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.tags li {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
+.tags li + li::before {
+  content: '/';
+  margin-right: 0.6rem;
+  color: var(--red);
 }
 
-.card-links {
+.card-foot {
   display: flex;
-  gap: 1rem;
-  font-size: 0.9rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;
+}
+
+.card-foot .open {
+  color: var(--red);
+}
+
+/* el botón "Código" se coloca por encima del enlace estirado */
+.btn-code {
+  position: relative;
+  z-index: 1;
+  padding: 0.35rem 0.75rem;
+  border: 2px solid currentColor;
+}
+
+.btn-code:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+/* ---------- pie ---------- */
+
+.site-footer {
+  margin-top: 6rem;
+  border-top: var(--rule-w) solid var(--rule);
+  padding: 1.25rem 0 3rem;
+  color: var(--ink-soft);
+}
+
+.site-footer .grid-12 {
+  align-items: baseline;
+}
+
+.site-footer .copy {
+  grid-column: 1 / span 6;
+}
+
+.site-footer .made {
+  grid-column: 7 / -1;
+  text-align: right;
+}
+
+.site-footer a {
+  border-bottom: 1px solid currentColor;
+}
+
+/* ---------- móvil ---------- */
+
+@media (max-width: 40rem) {
+  .hero .index,
+  .section-head .index {
+    grid-column: 1 / -1;
+    padding: 0 0 0.75rem;
+  }
+
+  .hero h1,
+  .hero p,
+  .section-head h2 {
+    grid-column: 1 / -1;
+  }
+
+  .brand {
+    grid-column: 1 / span 6;
+  }
+
+  .nav {
+    grid-column: 7 / -1;
+    gap: 1.25rem;
+  }
+
+  .site-footer .copy,
+  .site-footer .made {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
 }

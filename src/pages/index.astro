@@ -1,31 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
 import { projects } from '../data/projects';
+
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <Base title="Fabián Godoy · fabgs.dev">
-  <section class="hero">
-    <h1>Hola, soy Fabián.</h1>
-    <p>
-      Desarrollador de software. Aquí recojo los proyectos que voy publicando,
-      desde simulaciones en C compiladas a WebAssembly hasta herramientas web.
-    </p>
+  <section class="hero grid-12">
+    <span class="index label">01 — Portfolio</span>
+    <h1>Fabián<br />Godoy<em>.</em></h1>
+    <p>Desarrollador de software. Aquí recojo los proyectos que voy publicando.</p>
   </section>
 
   <section class="section" id="proyectos">
-    <h2>Proyectos</h2>
-    <div class="grid">
+    <header class="section-head grid-12">
+      <span class="index label">02 — Índice</span>
+      <h2>Proyectos</h2>
+    </header>
+
+    <div class="projects">
       {
-        projects.map((p) => (
+        projects.map((p, i) => (
           <article class="card">
+            <span class="index label">{pad(i + 1)}</span>
             <h3><a href={p.path}>{p.title}</a></h3>
             <p>{p.description}</p>
-            <ul class="tags">
+            <ul class="tags label">
               {p.tags.map((t) => <li>{t}</li>)}
             </ul>
-            <div class="card-links">
-              <a href={p.path}>Abrir →</a>
-              <a href={p.repo} target="_blank" rel="noopener">Código</a>
+            <div class="card-foot label">
+              <span class="open">Abrir →</span>
+              <a class="btn-code" href={p.repo} target="_blank" rel="noopener">Código ↗</a>
             </div>
           </article>
         ))
