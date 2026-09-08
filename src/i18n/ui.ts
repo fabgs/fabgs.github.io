@@ -19,7 +19,6 @@ export const ui = {
     'projects.title': 'Projects',
     'card.open': 'Open →',
     'card.code': 'Code ↗',
-    'guestbook.index': '03 — Guestbook',
     'guestbook.title': 'Guestbook',
     'guestbook.wip': 'Work in progress.',
     'guestbook.soon':
@@ -38,7 +37,6 @@ export const ui = {
     'projects.title': 'Proyectos',
     'card.open': 'Abrir →',
     'card.code': 'Código ↗',
-    'guestbook.index': '03 — Libro de visitas',
     'guestbook.title': 'Libro de visitas',
     'guestbook.wip': 'En construcción.',
     'guestbook.soon':

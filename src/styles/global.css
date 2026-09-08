@@ -137,14 +137,14 @@ a {
   background: var(--red);
   color: #fff;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: flex-end;
   padding: 0.6rem 0.7rem;
   transition: background 0.15s, color 0.15s;
 }
 
 .hero .mark .label {
   font-size: 0.6rem;
+  letter-spacing: 0.08em;
   line-height: 1.2;
 }
 
@@ -192,17 +192,23 @@ a {
 /* ---------- móvil: todo a una columna ---------- */
 
 @media (max-width: 40rem) {
+  /* El hero pasa a dos columnas: nombre a la izquierda, cuadrado a la derecha */
   .hero {
     padding: 3rem 0 2.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .hero .index,
-  .hero h1,
   .hero p,
   .section-head .index,
   .section-head h2 {
     grid-column: 1 / -1;
     grid-row: auto;
+  }
+
+  .hero h1 {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .hero .index,
@@ -216,10 +222,9 @@ a {
   }
 
   .hero .mark {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    justify-self: start;
-    margin-top: 2rem;
-    max-width: 6rem;
+    grid-column: 2;
+    grid-row: 2;
+    width: 6.5rem;
+    max-width: none;
   }
 }

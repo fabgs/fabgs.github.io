@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 
 <Base lang={lang} title={`${t('guestbook.title')} · ${site.domain}`}>
   <section class="hero grid-12">
-    <span class="index label">{t('guestbook.index')}</span>
+    <span class="index label">{site.domain} — {t('guestbook.title')}</span>
     <h1>{t('guestbook.title')}<em>.</em></h1>
     <p>
       <strong class="wip">{t('guestbook.wip')}</strong>
