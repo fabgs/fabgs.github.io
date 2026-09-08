@@ -180,7 +180,8 @@ a {
   color: var(--red);
 }
 
-/* bloque constructivista: un cuadrado rojo anclado a la última columna */
+/* bloque constructivista: cuadrado rojo en la última columna, que además
+   es la puerta al libro de visitas */
 .hero .mark {
   grid-column: 11 / span 2;
   grid-row: 1;
@@ -190,6 +191,23 @@ a {
   max-width: 7.5rem;
   aspect-ratio: 1;
   background: var(--red);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.6rem 0.7rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.hero .mark .label {
+  font-size: 0.6rem;
+  line-height: 1.2;
+}
+
+.hero .mark:hover,
+.hero .mark:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .hero p {
@@ -335,6 +353,26 @@ a {
   color: #fff;
 }
 
+/* ---------- página libro de visitas (WIP) ---------- */
+
+.wip {
+  display: inline-block;
+  margin-right: 0.35rem;
+  padding: 0.05rem 0.45rem;
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+}
+
+.back {
+  margin: 2rem 0 0;
+}
+
+.back a {
+  border-bottom: 2px solid var(--red);
+  padding-bottom: 0.15rem;
+}
+
 /* ---------- pie ---------- */
 
 .site-footer {
@@ -393,7 +431,11 @@ a {
   }
 
   .hero .mark {
-    display: none;
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 2rem;
+    max-width: 6rem;
   }
 
   .site-header .grid-12 {

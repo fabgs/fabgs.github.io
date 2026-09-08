@@ -1,0 +1,27 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} title={`${t('guestbook.title')} · fabgs.dev`}>
+  <section class="hero grid-12">
+    <span class="index label">{t('guestbook.index')}</span>
+    <h1>{t('guestbook.title')}<em>.</em></h1>
+    <p>
+      <strong class="wip">{t('guestbook.wip')}</strong>
+      {t('guestbook.soon')}
+    </p>
+  </section>
+
+  <p class="back label">
+    <a href={getRelativeLocaleUrl(lang, '')}>{t('guestbook.back')}</a>
+  </p>
+</Base>
