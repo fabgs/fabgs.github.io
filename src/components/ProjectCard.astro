@@ -1,0 +1,127 @@
+---
+import type { Project } from '../data/projects';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  /** Posición en el índice, empezando en 1 */
+  index: number;
+}
+
+const { project, lang, index } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<article class="card">
+  <span class="index label">{String(index).padStart(2, '0')}</span>
+  <h3><a href={project.path}>{project.title[lang]}</a></h3>
+  <p>{project.description[lang]}</p>
+  <ul class="tags label">
+    {project.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+  <div class="foot label">
+    <span class="open">{t('card.open')}</span>
+    <a class="code" href={project.repo} target="_blank" rel="noopener">{t('card.code')}</a>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto;
+    gap: 1rem;
+    padding: 1.5rem var(--gutter) 1.75rem;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .card:hover,
+  .card:focus-within {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .index {
+    color: var(--red);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  /* Enlace estirado: el título es el enlace y su ::after cubre toda la tarjeta.
+     Así toda la tarjeta lleva al proyecto sin anidar enlaces. */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 34rem;
+  }
+
+  .card:hover p,
+  .card:focus-within p {
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.6rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tags li + li::before {
+    content: '/';
+    margin-right: 0.6rem;
+    color: var(--red);
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid currentColor;
+  }
+
+  .open {
+    color: var(--red);
+    transition: transform 0.15s;
+  }
+
+  .card:hover .open {
+    transform: translateX(0.25rem);
+  }
+
+  /* El botón de código queda por encima del enlace estirado */
+  .code {
+    position: relative;
+    z-index: 1;
+    padding: 0.35rem 0.75rem;
+    border: 2px solid currentColor;
+    white-space: nowrap;
+  }
+
+  .code:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<footer class="site-footer">
+  <div class="container label">
+    <span class="copy">© {new Date().getFullYear()} {site.name}</span>
+    <span class="made">
+      {t('footer.made')} <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 6rem;
+    border-top: var(--rule-w) solid var(--rule);
+    padding: 1.25rem 0 2rem;
+    color: var(--ink-soft);
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+  }
+
+  a {
+    border-bottom: 1px solid currentColor;
+  }
+</style>

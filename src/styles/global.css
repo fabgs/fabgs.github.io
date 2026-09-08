@@ -1,0 +1,229 @@
+/* Estilo suizo / constructivista: rejilla estricta, tipografía como
+   elemento gráfico, reglas negras, un único acento rojo, sin adornos.
+
+   Aquí viven solo los tokens, la base y las utilidades compartidas.
+   Los estilos de cada pieza (cabecera, tarjeta, pie...) están en su componente. */
+
+/* ---------- tokens ---------- */
+
+:root {
+  --paper: #f2f0eb;
+  --ink: #111111;
+  --ink-soft: #4a4a4a;
+  --rule: #111111;
+  --red: #e3211b;
+  --rule-w: 3px;
+  --gutter: 1.5rem;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #111111;
+    --ink: #f2f0eb;
+    --ink-soft: #b5b2ab;
+    --rule: #f2f0eb;
+    --red: #ff3b30;
+  }
+}
+
+/* ---------- base ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Archivo Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* el body ocupa toda la ventana y el pie se queda abajo aunque haya poco contenido */
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--red);
+  color: var(--paper);
+}
+
+/* ---------- utilidades de rejilla ---------- */
+
+.container {
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+/* etiqueta pequeña en mayúsculas, típica de la escuela suiza */
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------- hero (portada y páginas interiores) ---------- */
+
+.hero {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero .index {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  color: var(--red);
+  padding-top: 0.6rem;
+}
+
+.hero h1 {
+  grid-column: 3 / span 8;
+  grid-row: 1;
+  margin: 0;
+  font-size: clamp(2.75rem, 9vw, 7.5rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--red);
+}
+
+/* bloque constructivista: cuadrado rojo en la última columna, que además
+   es la puerta al libro de visitas */
+.hero .mark {
+  grid-column: 11 / span 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
+  width: 100%;
+  max-width: 7.5rem;
+  aspect-ratio: 1;
+  background: var(--red);
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.6rem 0.7rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.hero .mark .label {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.hero .mark:hover,
+.hero .mark:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.hero p {
+  grid-column: 3 / span 6;
+  grid-row: 2;
+  margin: 2rem 0 0;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+/* ---------- cabeceras de sección ---------- */
+
+.section {
+  padding: 3rem 0 0;
+}
+
+.section-head {
+  align-items: baseline;
+  padding-bottom: 1rem;
+  border-bottom: var(--rule-w) solid var(--rule);
+}
+
+.section-head .index {
+  grid-column: 1 / span 2;
+  color: var(--red);
+}
+
+.section-head h2 {
+  grid-column: 3 / span 10;
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+/* ---------- móvil: todo a una columna ---------- */
+
+@media (max-width: 40rem) {
+  /* El hero pasa a dos columnas: nombre a la izquierda, cuadrado a la derecha */
+  .hero {
+    padding: 3rem 0 2.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .hero .index,
+  .hero p,
+  .section-head .index,
+  .section-head h2 {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .hero h1 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .hero .index,
+  .section-head .index {
+    padding: 0 0 0.75rem;
+  }
+
+  .hero p {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .hero .mark {
+    grid-column: 2;
+    grid-row: 2;
+    width: 6.5rem;
+    max-width: none;
+  }
+}

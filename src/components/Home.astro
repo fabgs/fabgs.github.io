@@ -1,0 +1,60 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/projects';
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} title={`${site.name} · ${site.domain}`}>
+  <section class="hero grid-12">
+    <span class="index label">{t('hero.index')}</span>
+    <h1>Fabián<br />Godoy<em>.</em></h1>
+    <a class="mark" href={getRelativeLocaleUrl(lang, 'guestbook')}>
+      <span class="label">{`${t('hero.mark')} →`}</span>
+    </a>
+    <p>{t('hero.tagline')}</p>
+  </section>
+
+  <section class="section" id="projects">
+    <header class="section-head grid-12">
+      <span class="index label">{t('projects.index')}</span>
+      <h2>{t('projects.title')}</h2>
+    </header>
+
+    <div class="projects">
+      {projects.map((p, i) => <ProjectCard project={p} lang={lang} index={i + 1} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Dos columnas en escritorio, una en móvil. Las reglas verticales se dibujan
+     con bordes en las tarjetas impares para que las celdas vacías queden limpias. */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects > :global(.card:nth-child(odd)) {
+    border-right: 1px solid var(--rule);
+  }
+
+  @media (max-width: 48rem) {
+    .projects {
+      grid-template-columns: 1fr;
+    }
+
+    .projects > :global(.card:nth-child(odd)) {
+      border-right: 0;
+    }
+  }
+</style>

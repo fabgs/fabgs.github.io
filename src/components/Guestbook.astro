@@ -1,0 +1,62 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} title={`${t('guestbook.title')} · ${site.domain}`}>
+  <section class="hero grid-12">
+    <span class="index label">{site.domain} — {t('guestbook.title')}</span>
+    <h1>{t('guestbook.heading')}<em>.</em></h1>
+    <p>
+      <strong class="wip">{t('guestbook.wip')}</strong>
+      {t('guestbook.soon')}
+    </p>
+  </section>
+
+  <p class="back label">
+    <a href={getRelativeLocaleUrl(lang, '')}>{t('guestbook.back')}</a>
+  </p>
+</Base>
+
+<style>
+  /* Sin cuadrado a la derecha, el titular puede ocupar toda la rejilla.
+     Talla algo menor para que palabras largas como GUESTBOOK no se partan. */
+  .hero h1 {
+    grid-column: 3 / -1;
+    font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+    white-space: pre-line; /* respeta el salto de línea de la traducción */
+  }
+
+  @media (max-width: 40rem) {
+    .hero h1 {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .wip {
+    display: inline-block;
+    margin-right: 0.35rem;
+    padding: 0.05rem 0.45rem;
+    background: var(--red);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .back {
+    margin: 2rem 0 0;
+  }
+
+  .back a {
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 0.15rem;
+  }
+</style>

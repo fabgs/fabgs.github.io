@@ -1,0 +1,63 @@
+---
+import '@fontsource-variable/archivo';
+import '../styles/global.css';
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { languages, defaultLang, useTranslations, type Lang } from '../i18n/ui';
+import { stripLocale } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+}
+
+const { lang, title } = Astro.props;
+const t = useTranslations(lang);
+const description = Astro.props.description ?? t('meta.description');
+const langs = Object.keys(languages) as Lang[];
+const path = stripLocale(Astro.url.pathname);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={getAbsoluteLocaleUrl(lang, path)} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={getAbsoluteLocaleUrl(l, path)} />)}
+    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLang, path)} />
+    <title>{title}</title>
+
+    {
+      /* Redirección por idioma del navegador, solo desde la versión por defecto.
+         La elección explícita del selector (localStorage) tiene prioridad. */
+      lang === defaultLang && (
+        <script is:inline>
+          (function () {
+            try {
+              var pref = localStorage.getItem('lang');
+              var browser = (navigator.language || '').slice(0, 2).toLowerCase();
+              if ((pref || browser) === 'es') {
+                location.replace('/es' + location.pathname + location.search + location.hash);
+              }
+            } catch (e) {}
+          })();
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <SiteHeader lang={lang} path={path} />
+    <main class="container">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} />
+  </body>
+</html>
