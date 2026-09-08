@@ -20,6 +20,8 @@ export const ui = {
     'card.open': 'Open →',
     'card.code': 'Code ↗',
     'guestbook.title': 'Guestbook',
+    /** Titular grande; admite "\n" para forzar el salto de línea */
+    'guestbook.heading': 'Guestbook',
     'guestbook.wip': 'Work in progress.',
     'guestbook.soon':
       'Soon you will be able to sign in with GitHub and leave a message here. Come back in a while.',
@@ -38,6 +40,7 @@ export const ui = {
     'card.open': 'Abrir →',
     'card.code': 'Código ↗',
     'guestbook.title': 'Libro de visitas',
+    'guestbook.heading': 'Libro de\nvisitas',
     'guestbook.wip': 'En construcción.',
     'guestbook.soon':
       'Pronto podrás iniciar sesión con GitHub y dejar aquí un mensaje. Vuelve dentro de un tiempo.',

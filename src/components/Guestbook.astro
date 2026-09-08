@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 <Base lang={lang} title={`${t('guestbook.title')} · ${site.domain}`}>
   <section class="hero grid-12">
     <span class="index label">{site.domain} — {t('guestbook.title')}</span>
-    <h1>{t('guestbook.title')}<em>.</em></h1>
+    <h1>{t('guestbook.heading')}<em>.</em></h1>
     <p>
       <strong class="wip">{t('guestbook.wip')}</strong>
       {t('guestbook.soon')}
@@ -33,6 +33,7 @@ const t = useTranslations(lang);
   .hero h1 {
     grid-column: 3 / -1;
     font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+    white-space: pre-line; /* respeta el salto de línea de la traducción */
   }
 
   @media (max-width: 40rem) {
