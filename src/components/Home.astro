@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { projects } from '../data/projects';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<Base lang={lang} title="Fabián Godoy · fabgs.dev">
+  <section class="hero grid-12">
+    <span class="index label">{t('hero.index')}</span>
+    <h1>Fabián<br />Godoy<em>.</em></h1>
+    <span class="mark" aria-hidden="true"></span>
+    <p>{t('hero.tagline')}</p>
+  </section>
+
+  <section class="section" id="projects">
+    <header class="section-head grid-12">
+      <span class="index label">{t('projects.index')}</span>
+      <h2>{t('projects.title')}</h2>
+    </header>
+
+    <div class="projects">
+      {
+        projects.map((p, i) => (
+          <article class="card">
+            <span class="index label">{pad(i + 1)}</span>
+            <h3><a href={p.path}>{p.title[lang]}</a></h3>
+            <p>{p.description[lang]}</p>
+            <ul class="tags label">
+              {p.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+            <div class="card-foot label">
+              <span class="open">{t('card.open')}</span>
+              <a class="btn-code" href={p.repo} target="_blank" rel="noopener">{t('card.code')}</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Base>

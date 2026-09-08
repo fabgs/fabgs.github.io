@@ -13,7 +13,11 @@ npm run build    # genera dist/
 npm run preview  # sirve dist/
 ```
 
-Los proyectos de la portada se definen en `src/data/projects.ts`.
+Los proyectos de la portada se definen en `src/data/projects.ts`. Los textos de la interfaz están en `src/i18n/ui.ts`.
+
+## Idiomas
+
+El sitio está en inglés por defecto (`/`) y en español en `/es/`. En la primera visita a `/`, un script redirige a `/es/` si el navegador está en español. El selector EN/ES de la cabecera guarda la elección en `localStorage` y tiene prioridad sobre el idioma del navegador.
 
 ## Despliegue
 

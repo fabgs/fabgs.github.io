@@ -6,4 +6,11 @@ import vue from '@astrojs/vue';
 export default defineConfig({
   site: 'https://fabgs.dev',
   integrations: [vue()],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'es'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 });

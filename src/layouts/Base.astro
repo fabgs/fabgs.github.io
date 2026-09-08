@@ -1,35 +1,79 @@
 ---
 import '@fontsource-variable/archivo';
 import '../styles/global.css';
+import { getRelativeLocaleUrl, getAbsoluteLocaleUrl } from 'astro:i18n';
+import { languages, defaultLang, useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
+  lang: Lang;
   title: string;
   description?: string;
 }
 
-const {
-  title,
-  description = 'Portfolio de Fabián Godoy: proyectos y experimentos.',
-} = Astro.props;
+const { lang, title } = Astro.props;
+const t = useTranslations(lang);
+const description = Astro.props.description ?? t('meta.description');
+const langs = Object.keys(languages) as Lang[];
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={Astro.url} />
+    <link rel="canonical" href={getAbsoluteLocaleUrl(lang, '')} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={getAbsoluteLocaleUrl(l, '')} />)}
+    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLang, '')} />
     <title>{title}</title>
+
+    {
+      /* Redirección por idioma del navegador, solo desde la versión por defecto.
+         La elección explícita del selector (localStorage) tiene prioridad. */
+      lang === defaultLang && (
+        <script is:inline>
+          (function () {
+            try {
+              var pref = localStorage.getItem('lang');
+              var browser = (navigator.language || '').slice(0, 2).toLowerCase();
+              var want = pref || browser;
+              if (want === 'es') {
+                location.replace('/es/' + location.search + location.hash);
+              }
+            } catch (e) {}
+          })();
+        </script>
+      )
+    }
   </head>
   <body>
     <header class="site-header">
       <div class="container grid-12">
-        <a class="brand" href="/">fabgs.dev</a>
+        <a class="brand" href={getRelativeLocaleUrl(lang, '')}>fabgs.dev</a>
         <nav class="nav label">
-          <a href="/#proyectos">Proyectos</a>
-          <a href="https://github.com/fabgs" rel="me noopener" target="_blank">GitHub</a>
+          <a href={getRelativeLocaleUrl(lang, '') + '#projects'}>{t('nav.projects')}</a>
+          <a href="https://github.com/fabgs" rel="me noopener" target="_blank">{t('nav.github')}</a>
+          <span class="lang-switch" aria-label="Language">
+            {
+              langs.map((l, i) => (
+                <>
+                  {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+                  <a
+                    href={getRelativeLocaleUrl(l, '')}
+                    data-lang={l}
+                    aria-current={l === lang ? 'page' : undefined}
+                    lang={l}
+                  >
+                    {l.toUpperCase()}
+                  </a>
+                </>
+              ))
+            }
+          </span>
         </nav>
       </div>
     </header>
@@ -42,9 +86,20 @@ const {
       <div class="container grid-12 label">
         <span class="copy">© {new Date().getFullYear()} Fabián Godoy</span>
         <span class="made">
-          Hecho con <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+          {t('footer.made')} <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
         </span>
       </div>
     </footer>
+
+    <script>
+      // Guarda la elección explícita de idioma para futuras visitas.
+      document.querySelectorAll<HTMLAnchorElement>('.lang-switch a[data-lang]').forEach((a) => {
+        a.addEventListener('click', () => {
+          try {
+            localStorage.setItem('lang', a.dataset.lang ?? '');
+          } catch {}
+        });
+      });
+    </script>
   </body>
 </html>
