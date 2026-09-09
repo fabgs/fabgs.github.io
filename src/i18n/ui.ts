@@ -18,7 +18,7 @@ export const ui = {
     'projects.index': '02 — Index',
     'projects.title': 'Projects',
     'card.open': 'Open →',
-    'card.code': 'Code ↗',
+    'card.code': 'Code →',
     'guestbook.title': 'Guestbook',
     /** Titular grande; admite "\n" para forzar el salto de línea */
     'guestbook.heading': 'Guestbook',
@@ -38,7 +38,7 @@ export const ui = {
     'projects.index': '02 — Índice',
     'projects.title': 'Proyectos',
     'card.open': 'Abrir →',
-    'card.code': 'Código ↗',
+    'card.code': 'Código →',
     'guestbook.title': 'Libro de visitas',
     'guestbook.heading': 'Libro de\nvisitas',
     'guestbook.wip': 'En construcción.',
