@@ -17,9 +17,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 // Destino de la tarjeta entera: la demo si existe, si no el primer repositorio.
 const primary = project.live ?? project.repos[0].href;
 const primaryExternal = isExternal(primary);
-const primaryLabel = project.live
-  ? t(primaryExternal ? 'card.openExternal' : 'card.open')
-  : t('card.code');
+const primaryLabel = t(project.live ? 'card.open' : 'card.code');
 
 // Botones de repositorio: se ocultan si la tarjeta ya lleva a ese único repo.
 const repoButtons = project.live || project.repos.length > 1 ? project.repos : [];
@@ -47,7 +45,7 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
         <span class="repos">
           {repoButtons.map((r) => (
             <a class="code" href={r.href} target="_blank" rel="noopener">
-              {r.label ? `${r.label} ↗` : t('card.code')}
+              {r.label ? `${r.label} →` : t('card.code')}
             </a>
           ))}
         </span>
