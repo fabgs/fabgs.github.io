@@ -23,29 +23,8 @@ export interface Project {
   repos: [RepoLink, ...RepoLink[]];
 }
 
+// Mismo orden que los repositorios fijados en github.com/fabgs
 export const projects: Project[] = [
-  {
-    slug: 'boids',
-    title: { en: 'Boids 3D', es: 'Boids 3D' },
-    description: {
-      en: 'Real-time flocking simulator written in C with raylib. Thousands of agents thanks to a spatial grid, multithreading and GPU instanced rendering. Compiled to WebAssembly.',
-      es: 'Simulador de bandadas en tiempo real escrito en C con raylib. Miles de agentes gracias a una rejilla espacial, multihilo y renderizado instanciado en GPU. Compilado a WebAssembly.',
-    },
-    tags: ['C', 'raylib', 'WebAssembly', 'OpenMP', 'GLSL'],
-    live: '/boids/',
-    repos: [{ href: 'https://github.com/fabgs/boids' }],
-  },
-  {
-    slug: 'cronometro-ada',
-    title: { en: 'ADA Debate Timer', es: 'Cronómetro ADA' },
-    description: {
-      en: 'Projection-ready timer for the Alicante Debate Association. Academic and British Parliamentary formats, configurable timings, phase navigation and keyboard control.',
-      es: 'Cronómetro para debates de la Asociación de Debate de Alicante. Formatos académico y parlamentario británico, tiempos configurables, navegación por fases y manejo por teclado.',
-    },
-    tags: ['JavaScript', 'Vite', 'Vitest', 'PWA'],
-    live: '/cronometro-ada/',
-    repos: [{ href: 'https://github.com/fabgs/cronometro-ada' }],
-  },
   {
     slug: 'tpv-virtual',
     title: { en: 'TPV Virtual', es: 'TPV Virtual' },
@@ -69,5 +48,27 @@ export const projects: Project[] = [
     },
     tags: ['Python', 'Multi-agent', 'UAV', 'GAMA Platform'],
     repos: [{ href: 'https://github.com/fabgs/SARenv-swarm' }],
+  },
+  {
+    slug: 'cronometro-ada',
+    title: { en: 'ADA Debate Timer', es: 'Cronómetro ADA' },
+    description: {
+      en: 'Projection-ready timer for the Alicante Debate Association. Academic and British Parliamentary formats, configurable timings, phase navigation and keyboard control.',
+      es: 'Cronómetro para debates de la Asociación de Debate de Alicante. Formatos académico y parlamentario británico, tiempos configurables, navegación por fases y manejo por teclado.',
+    },
+    tags: ['JavaScript', 'Vite', 'Vitest', 'PWA'],
+    live: '/cronometro-ada/',
+    repos: [{ href: 'https://github.com/fabgs/cronometro-ada' }],
+  },
+  {
+    slug: 'boids',
+    title: { en: 'Boids 3D', es: 'Boids 3D' },
+    description: {
+      en: 'Real-time flocking simulator written in C with raylib. Thousands of agents thanks to a spatial grid, multithreading and GPU instanced rendering. Compiled to WebAssembly.',
+      es: 'Simulador de bandadas en tiempo real escrito en C con raylib. Miles de agentes gracias a una rejilla espacial, multihilo y renderizado instanciado en GPU. Compilado a WebAssembly.',
+    },
+    tags: ['C', 'raylib', 'WebAssembly', 'OpenMP', 'GLSL'],
+    live: '/boids/',
+    repos: [{ href: 'https://github.com/fabgs/boids' }],
   },
 ];
