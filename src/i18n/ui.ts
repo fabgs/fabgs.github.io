@@ -18,6 +18,7 @@ export const ui = {
     'projects.index': '02 — Index',
     'projects.title': 'Projects',
     'card.open': 'Open →',
+    'card.openExternal': 'Open ↗',
     'card.code': 'Code ↗',
     'guestbook.title': 'Guestbook',
     /** Titular grande; admite "\n" para forzar el salto de línea */
@@ -38,6 +39,7 @@ export const ui = {
     'projects.index': '02 — Índice',
     'projects.title': 'Proyectos',
     'card.open': 'Abrir →',
+    'card.openExternal': 'Abrir ↗',
     'card.code': 'Código ↗',
     'guestbook.title': 'Libro de visitas',
     'guestbook.heading': 'Libro de\nvisitas',

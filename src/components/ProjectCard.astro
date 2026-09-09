@@ -11,18 +11,48 @@ interface Props {
 
 const { project, lang, index } = Astro.props;
 const t = useTranslations(lang);
+
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+
+// Destino de la tarjeta entera: la demo si existe, si no el primer repositorio.
+const primary = project.live ?? project.repos[0].href;
+const primaryExternal = isExternal(primary);
+const primaryLabel = project.live
+  ? t(primaryExternal ? 'card.openExternal' : 'card.open')
+  : t('card.code');
+
+// Botones de repositorio: se ocultan si la tarjeta ya lleva a ese único repo.
+const repoButtons = project.live || project.repos.length > 1 ? project.repos : [];
 ---
 
 <article class="card">
   <span class="index label">{String(index).padStart(2, '0')}</span>
-  <h3><a href={project.path}>{project.title[lang]}</a></h3>
+  <h3>
+    <a
+      href={primary}
+      target={primaryExternal ? '_blank' : undefined}
+      rel={primaryExternal ? 'noopener' : undefined}
+    >
+      {project.title[lang]}
+    </a>
+  </h3>
   <p>{project.description[lang]}</p>
   <ul class="tags label">
     {project.tags.map((tag) => <li>{tag}</li>)}
   </ul>
   <div class="foot label">
-    <span class="open">{t('card.open')}</span>
-    <a class="code" href={project.repo} target="_blank" rel="noopener">{t('card.code')}</a>
+    <span class="open">{primaryLabel}</span>
+    {
+      repoButtons.length > 0 && (
+        <span class="repos">
+          {repoButtons.map((r) => (
+            <a class="code" href={r.href} target="_blank" rel="noopener">
+              {r.label ? `${r.label} ↗` : t('card.code')}
+            </a>
+          ))}
+        </span>
+      )
+    }
   </div>
 </article>
 
@@ -57,7 +87,7 @@ const t = useTranslations(lang);
   }
 
   /* Enlace estirado: el título es el enlace y su ::after cubre toda la tarjeta.
-     Así toda la tarjeta lleva al proyecto sin anidar enlaces. */
+     Así toda la tarjeta lleva al destino sin anidar enlaces. */
   h3 a::after {
     content: '';
     position: absolute;
@@ -98,7 +128,8 @@ const t = useTranslations(lang);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
     padding-top: 1rem;
     border-top: 1px solid currentColor;
   }
@@ -112,7 +143,13 @@ const t = useTranslations(lang);
     transform: translateX(0.25rem);
   }
 
-  /* El botón de código queda por encima del enlace estirado */
+  .repos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Los botones de repositorio quedan por encima del enlace estirado */
   .code {
     position: relative;
     z-index: 2;

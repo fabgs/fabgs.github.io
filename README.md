@@ -18,7 +18,7 @@ npm run preview  # sirve dist/
 ```
 src/
   config/site.ts        nombre, dominio y redes sociales (añade aquí un enlace nuevo)
-  data/projects.ts      proyectos de la portada, con título y descripción por idioma
+  data/projects.ts      proyectos de la portada: título y descripción por idioma, demo opcional (live) y repositorios
   i18n/ui.ts            textos de la interfaz por idioma
   i18n/utils.ts         utilidades de rutas con prefijo de idioma
   layouts/Base.astro    <head>, cabecera, pie y redirección por idioma
@@ -27,7 +27,7 @@ src/
   styles/global.css     tokens de diseño, base y utilidades compartidas (rejilla, .label)
 ```
 
-Para añadir un proyecto: una entrada en `src/data/projects.ts`. Para una página nueva: un componente en `components/` que use `Base` y dos ficheros en `pages/` y `pages/es/` que lo rendericen con su idioma. Los textos nuevos van a `src/i18n/ui.ts`, que obliga a definirlos en todos los idiomas.
+Para añadir un proyecto: una entrada en `src/data/projects.ts`. Si tiene demo, `live` es su URL (relativa si vive bajo fabgs.dev, absoluta si no); sin `live`, la tarjeta entera enlaza al primer repositorio. Con varios repositorios, cada uno lleva su `label`. Para una página nueva: un componente en `components/` que use `Base` y dos ficheros en `pages/` y `pages/es/` que lo rendericen con su idioma. Los textos nuevos van a `src/i18n/ui.ts`, que obliga a definirlos en todos los idiomas.
 
 ## Idiomas
 
