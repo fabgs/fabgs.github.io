@@ -132,8 +132,14 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     border-top: 1px solid currentColor;
   }
 
+  /* Misma altura que un botón (padding + borde), aunque sea solo texto:
+     así el pie mide igual en todas las tarjetas y la regla superior queda
+     alineada entre las tarjetas de una misma fila. */
   .open {
     color: var(--red);
+    padding: 0.35rem 0;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
     transition: transform 0.15s;
   }
 
