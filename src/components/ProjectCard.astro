@@ -62,6 +62,8 @@ const t = useTranslations(lang);
     content: '';
     position: absolute;
     inset: 0;
+    /* Por encima de cualquier hijo que cree su propia capa (opacity, transform) */
+    z-index: 1;
   }
 
   p {
@@ -113,7 +115,7 @@ const t = useTranslations(lang);
   /* El botón de código queda por encima del enlace estirado */
   .code {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     padding: 0.35rem 0.75rem;
     border: 2px solid currentColor;
     white-space: nowrap;
