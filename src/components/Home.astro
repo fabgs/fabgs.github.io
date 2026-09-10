@@ -2,6 +2,8 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import Base from '../layouts/Base.astro';
 import ProjectCard from './ProjectCard.astro';
+import MarginField from './MarginField.astro';
+import Door from './Door.astro';
 import { projects } from '../data/projects';
 import { site } from '../config/site';
 import { useTranslations, type Lang } from '../i18n/ui';
@@ -18,9 +20,8 @@ const t = useTranslations(lang);
   <section class="hero grid-12">
     <span class="index label">{t('hero.index')}</span>
     <h1>Fabián<br />Godoy<em>.</em></h1>
-    <a class="mark" href={getRelativeLocaleUrl(lang, 'guestbook')}>
-      <span class="label">{`${t('hero.mark')} →`}</span>
-    </a>
+    <Door class="mark mark-door" href={getRelativeLocaleUrl(lang, 'guestbook')} label={t('guestbook.title')} />
+    <span class="mark mark-plain" aria-hidden="true"></span>
     <p>{t('hero.tagline')}</p>
   </section>
 
@@ -34,6 +35,8 @@ const t = useTranslations(lang);
       {projects.map((p, i) => <ProjectCard project={p} lang={lang} index={i + 1} />)}
     </div>
   </section>
+
+  <MarginField lang={lang} />
 </Base>
 
 <style>

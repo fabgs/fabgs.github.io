@@ -38,6 +38,10 @@ const home = getRelativeLocaleUrl(lang, '');
 <style>
   .site-header {
     border-bottom: var(--rule-w) solid var(--rule);
+    /* Franja sólida de lado a lado, por encima del campo de puntos de los márgenes */
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
   }
 
   .container {

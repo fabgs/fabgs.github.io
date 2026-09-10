@@ -123,8 +123,9 @@ a {
   color: var(--red);
 }
 
-/* bloque constructivista: cuadrado rojo en la última columna, que además
-   es la puerta al libro de visitas */
+/* bloque constructivista: cuadrado rojo en la última columna. En pantallas
+   estrechas es la puerta al libro de visitas (.mark-door); en las anchas la
+   puerta vive en el margen y aquí queda un cuadrado liso (.mark-plain). */
 .hero .mark {
   grid-column: 11 / span 2;
   grid-row: 1;
@@ -133,24 +134,22 @@ a {
   width: 100%;
   max-width: 7.5rem;
   aspect-ratio: 1;
+}
+
+.hero .mark-plain {
+  display: none;
   background: var(--red);
-  color: #fff;
-  display: flex;
-  align-items: flex-end;
-  padding: 0.6rem 0.7rem;
-  transition: background 0.15s, color 0.15s;
 }
 
-.hero .mark .label {
-  font-size: 0.6rem;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-}
+/* Especificidad extra: el componente Door fija display: block con estilo propio */
+@media (min-width: 100rem) {
+  .hero .mark.mark-door {
+    display: none;
+  }
 
-.hero .mark:hover,
-.hero .mark:focus-visible {
-  background: var(--ink);
-  color: var(--paper);
+  .hero .mark.mark-plain {
+    display: block;
+  }
 }
 
 .hero p {
