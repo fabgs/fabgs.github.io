@@ -1,0 +1,135 @@
+---
+/**
+ * Campo de los márgenes en pantallas anchas: retícula de puntos y varios
+ * cuadrados rojos colocados DENTRO del margen real, así nunca invaden la
+ * columna. Uno de ellos es una puerta escondida al libro de visitas.
+ */
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Lang } from '../i18n/ui';
+import Door from './Door.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const doorHref = getRelativeLocaleUrl(lang, 'guestbook');
+
+interface Square {
+  side: 'left' | 'right';
+  /** Tamaño en unidades de retícula (1 unidad = 1.5rem) */
+  size: number;
+  /** Posición dentro del margen, de 0 (borde exterior / arriba) a 1 (junto a la columna / abajo) */
+  x: number;
+  y: number;
+  /** Duración de la deriva, en segundos */
+  drift: number;
+  door?: boolean;
+}
+
+// Composición fija, expresada en fracciones del margen disponible.
+const squares: Square[] = [
+  { side: 'left', size: 3, x: 0.15, y: 0.14, drift: 11 },
+  { side: 'left', size: 1, x: 0.7, y: 0.36, drift: 9 },
+  { side: 'left', size: 2, x: 0.35, y: 0.56, drift: 13, door: true },
+  { side: 'left', size: 1, x: 0.85, y: 0.78, drift: 10 },
+  { side: 'right', size: 1, x: 0.3, y: 0.2, drift: 12 },
+  { side: 'right', size: 1, x: 0.1, y: 0.44, drift: 8 },
+  { side: 'right', size: 4, x: 0.7, y: 0.64, drift: 14 },
+];
+
+const styleOf = (s: Square) => `--size:${s.size};--x:${s.x};--y:${s.y};--drift:${s.drift}s`;
+---
+
+{
+  (['left', 'right'] as const).map((side) => (
+    <div class:list={['field', side]}>
+      <span class="dots" aria-hidden="true"></span>
+      {squares
+        .filter((s) => s.side === side)
+        .map((s) =>
+          s.door ? (
+            <Door class="sq" href={doorHref} label={t('guestbook.title')} style={styleOf(s)} />
+          ) : (
+            <span class="sq" style={styleOf(s)} aria-hidden="true"></span>
+          ),
+        )}
+    </div>
+  ))
+}
+
+<style>
+  :root {
+    --unit: 1.5rem;
+    --col: 76rem;
+  }
+
+  .field {
+    display: none;
+  }
+
+  /* Solo cuando sobra margen a los lados de la columna */
+  @media (min-width: 100rem) {
+    .field {
+      display: block;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      /* margen real menos un respiro junto a la columna */
+      width: calc((100vw - var(--col)) / 2 - 2 * var(--unit));
+      pointer-events: none;
+    }
+
+    .field.left {
+      left: 0;
+    }
+
+    .field.right {
+      right: 0;
+    }
+
+    .dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(var(--rule) 1px, transparent 1.5px);
+      background-size: var(--unit) var(--unit);
+      background-position: calc(var(--unit) / 2) calc(var(--unit) / 2);
+      opacity: 0.22;
+    }
+
+    /* Cada cuadrado se coloca en una fracción del espacio que le queda libre,
+       así siempre cabe entero dentro del margen. */
+    .field :global(.sq) {
+      position: absolute;
+      --px: calc(var(--size) * var(--unit));
+      width: var(--px);
+      height: var(--px);
+      left: calc(var(--x) * (100% - var(--px)));
+      top: calc(var(--y) * (100% - var(--px)));
+      background: var(--red);
+      animation: drift var(--drift) ease-in-out infinite alternate;
+    }
+
+    /* La puerta pinta su propia hoja y recibe clics aunque el margen no */
+    .field :global(.sq.door) {
+      background: none;
+      pointer-events: auto;
+    }
+  }
+
+  @keyframes drift {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: 0 calc(var(--unit) * -0.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .field :global(.sq) {
+      animation: none;
+    }
+  }
+</style>

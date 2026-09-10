@@ -1,0 +1,97 @@
+---
+/**
+ * Un cuadrado rojo que es una puerta: sin etiqueta visible, con nombre
+ * accesible. Al pasar el ratón aparece el pomo; al pulsar, la hoja gira
+ * sobre su bisagra, el hueco se expande hasta llenar la pantalla y se navega.
+ * El tamaño y la posición los decide quien lo usa a través de `class`.
+ */
+interface Props {
+  href: string;
+  label: string;
+  class?: string;
+  style?: string;
+}
+
+const { href, label, class: className, style } = Astro.props;
+---
+
+<a class:list={['door', className]} href={href} style={style} aria-label={label}>
+  <span class="way"></span>
+  <span class="leaf"></span>
+</a>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLAnchorElement>('.door').forEach((door) => {
+    door.addEventListener('click', (e) => {
+      // Clic normal: primero se abre la puerta, después se atraviesa.
+      if (reduced || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      door.classList.add('opening');
+      setTimeout(() => (location.href = door.href), 1250);
+    });
+  });
+</script>
+
+<style>
+  .door {
+    position: relative;
+    display: block;
+    perspective: 40rem;
+  }
+
+  .way,
+  .leaf {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  /* El hueco: invisible hasta que la puerta se abre; luego crece hasta cubrir la pantalla */
+  .way {
+    background: var(--ink);
+    visibility: hidden;
+    transform: scale(1);
+    transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1) 0.55s;
+  }
+
+  /* La hoja gira sobre su lado izquierdo */
+  .leaf {
+    background: var(--red);
+    transform-origin: left center;
+    transition: transform 0.65s cubic-bezier(0.5, 0, 0.15, 1);
+  }
+
+  /* El pomo, solo al pasar el ratón o enfocar con teclado */
+  .leaf::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 18%;
+    width: 14%;
+    height: 14%;
+    max-width: 0.6rem;
+    max-height: 0.6rem;
+    transform: translateY(-50%) scale(0);
+    background: var(--ink);
+    transition: transform 0.2s;
+  }
+
+  .door:hover .leaf::after,
+  .door:focus-visible .leaf::after {
+    transform: translateY(-50%) scale(1);
+  }
+
+  .door.opening {
+    z-index: 50;
+  }
+
+  .door.opening .leaf {
+    transform: rotateY(-88deg);
+  }
+
+  .door.opening .way {
+    visibility: visible;
+    transform: scale(120);
+  }
+</style>
