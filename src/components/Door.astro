@@ -22,13 +22,29 @@ const { href, label, class: className, style } = Astro.props;
 
 <script>
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Al volver con "atrás", el navegador restaura la página tal y como quedó,
+  // con la puerta abierta. Se cierra de nuevo.
+  window.addEventListener('pageshow', () => {
+    document.querySelectorAll('.door.opening').forEach((d) => d.classList.remove('opening'));
+  });
+
   document.querySelectorAll<HTMLAnchorElement>('.door').forEach((door) => {
     door.addEventListener('click', (e) => {
       // Clic normal: primero se abre la puerta, después se atraviesa.
       if (reduced || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
       door.classList.add('opening');
-      setTimeout(() => (location.href = door.href), 1250);
+      // Se navega en cuanto la hoja termina de abrirse (tope por si el evento no llega)
+      const leaf = door.querySelector('.leaf')!;
+      let done = false;
+      const go = () => {
+        if (done) return;
+        done = true;
+        location.href = door.href;
+      };
+      leaf.addEventListener('transitionend', go, { once: true });
+      setTimeout(go, 900);
     });
   });
 </script>
@@ -47,12 +63,10 @@ const { href, label, class: className, style } = Astro.props;
     display: block;
   }
 
-  /* El hueco: invisible hasta que la puerta se abre; luego crece hasta cubrir la pantalla */
+  /* El hueco: la luz que se ve al abrir la puerta */
   .way {
     background: var(--ink);
     visibility: hidden;
-    transform: scale(1);
-    transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1) 0.55s;
   }
 
   /* La hoja gira sobre su lado izquierdo */
@@ -92,6 +106,5 @@ const { href, label, class: className, style } = Astro.props;
 
   .door.opening .way {
     visibility: visible;
-    transform: scale(120);
   }
 </style>
