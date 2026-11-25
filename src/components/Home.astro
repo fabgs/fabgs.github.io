@@ -28,7 +28,6 @@ const t = useTranslations(lang);
     <span class="index label">{t('hero.index')}</span>
     <h1>Fabián<br />Godoy<em>.</em></h1>
     <Door class="mark mark-door" href={getRelativeLocaleUrl(lang, 'guestbook')} label={t('guestbook.title')} />
-    <span class="mark mark-plain" aria-hidden="true"></span>
     <p>{t('hero.tagline')}</p>
     <div class="actions">
       <a class="btn btn-primary" href={site.cv} target="_blank" rel="noopener">{t('hero.cv')} ↓</a>
@@ -75,7 +74,7 @@ const t = useTranslations(lang);
   }
 
   .projects > :global(.card:nth-child(odd)) {
-    border-right: 1px solid var(--rule);
+    border-right: 1px solid var(--rule-soft);
   }
 
   @media (max-width: 48rem) {

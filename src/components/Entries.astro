@@ -73,20 +73,20 @@ const hrefOf = (href: string | Record<Lang, string>) => (typeof href === 'string
 
   .entry {
     padding: 1.75rem 0 2rem;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule-soft);
   }
 
   .when {
     grid-column: 1 / span 2;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.3rem;
     margin: 0;
-    padding-top: 0.45rem;
+    padding-top: 0.35rem;
   }
 
   .place {
-    color: var(--ink-soft);
+    color: var(--ink-faint);
   }
 
   .what {
@@ -98,24 +98,28 @@ const hrefOf = (href: string | Record<Lang, string>) => (typeof href === 'string
 
   h3 {
     margin: 0;
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   h3 a {
-    border-bottom: 2px solid transparent;
+    transition: color 0.15s;
   }
 
   h3 a:hover {
-    border-color: var(--red);
+    color: var(--red);
   }
 
   .subtitle {
     margin: -0.5rem 0 0;
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .slashes {
+    color: var(--ink-soft);
   }
 
   .points {
@@ -129,7 +133,7 @@ const hrefOf = (href: string | Record<Lang, string>) => (typeof href === 'string
     line-height: 1.5;
   }
 
-  /* viñeta: un cuadrado rojo pequeño, el mismo motivo que el resto del sitio */
+  /* viñeta: un cuadrado pequeño y discreto, el motivo del resto del sitio */
   .points li {
     position: relative;
     padding-left: 1.1rem;
@@ -139,10 +143,10 @@ const hrefOf = (href: string | Record<Lang, string>) => (typeof href === 'string
     content: '';
     position: absolute;
     left: 0;
-    top: 0.6em;
-    width: 0.4rem;
-    height: 0.4rem;
-    background: var(--red);
+    top: 0.65em;
+    width: 0.3rem;
+    height: 0.3rem;
+    background: var(--ink-faint);
   }
 
   .links {

@@ -70,27 +70,32 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     grid-template-rows: auto auto 1fr auto auto;
     gap: 1rem;
     padding: 1.5rem var(--gutter) 1.75rem;
-    border-bottom: 1px solid var(--rule);
-    background: var(--paper);
-    transition: background 0.15s, color 0.15s;
+    border-bottom: 1px solid var(--rule-soft);
+    transition: background 0.15s;
   }
 
+  /* Al pasar por encima: un velo suave sobre la banda y el título en rojo */
   .card:hover,
   .card:focus-within {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--hover);
   }
 
   .index {
-    color: var(--red);
+    color: var(--ink-faint);
   }
 
   h3 {
     margin: 0;
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    transition: color 0.15s;
+  }
+
+  .card:hover h3,
+  .card:focus-within h3 {
+    color: var(--red);
   }
 
   /* Enlace estirado: el título es el enlace y su ::after cubre toda la tarjeta.
@@ -116,19 +121,18 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     max-width: 34rem;
   }
 
-  .card:hover p,
-  .card:focus-within p {
-    color: inherit;
-    opacity: 0.8;
-  }
-
   .role {
     font-size: 0.9rem;
   }
 
   .role .label {
-    color: var(--red);
+    color: var(--ink);
+    font-weight: 600;
     margin-right: 0.35rem;
+  }
+
+  .slashes {
+    color: var(--ink-soft);
   }
 
   .foot {
@@ -138,7 +142,7 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     flex-wrap: wrap;
     gap: 0.75rem 1rem;
     padding-top: 1rem;
-    border-top: 1px solid currentColor;
+    border-top: 1px solid var(--rule-soft);
   }
 
   /* Misma altura que un botón (padding + borde), aunque sea solo texto:
@@ -146,9 +150,10 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
      alineada entre las tarjetas de una misma fila. */
   .open {
     color: var(--red);
+    font-weight: 600;
     padding: 0.35rem 0;
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
     transition: transform 0.15s;
   }
 
@@ -167,13 +172,14 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     position: relative;
     z-index: 2;
     padding: 0.35rem 0.75rem;
-    border: 2px solid currentColor;
+    border: 1px solid var(--rule);
+    font-weight: 600;
     white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s;
   }
 
   .code:hover {
-    background: var(--red);
     border-color: var(--red);
-    color: #fff;
+    color: var(--red);
   }
 </style>

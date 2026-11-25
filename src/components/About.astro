@@ -1,8 +1,7 @@
 ---
 /**
- * Sobre mí: la foto y unos párrafos. La foto va en blanco y negro para no
- * competir con el único acento rojo del sitio, y recupera el color al pasar
- * por encima.
+ * Sobre mí: la foto, con un cuadrado rojo que asoma por detrás de su esquina,
+ * y unos párrafos.
  */
 import { Picture } from 'astro:assets';
 import photo from '../assets/fabian.jpg';
@@ -47,7 +46,7 @@ const t = useTranslations(lang);
     margin: 0;
   }
 
-  /* cuadrado rojo que asoma por detrás de la esquina, como el del hero */
+  /* cuadrado rojo que asoma por detrás de la esquina, el motivo del sitio */
   .photo::before {
     content: '';
     position: absolute;
@@ -63,12 +62,6 @@ const t = useTranslations(lang);
     display: block;
     width: 100%;
     height: auto;
-    filter: grayscale(1) contrast(1.05);
-    transition: filter 0.3s;
-  }
-
-  .photo:hover :global(img) {
-    filter: none;
   }
 
   .text {
@@ -86,10 +79,10 @@ const t = useTranslations(lang);
   }
 
   p:first-child {
-    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-    font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.015em;
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
     color: var(--ink);
   }
 
