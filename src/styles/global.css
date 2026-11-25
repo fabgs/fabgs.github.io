@@ -1,5 +1,6 @@
-/* Estilo suizo / constructivista: rejilla estricta, tipografía como
-   elemento gráfico, reglas negras, un único acento rojo, sin adornos.
+/* Estilo suizo calmado: rejilla estricta y tipografía como elemento gráfico,
+   pero con reglas finas, minúscula normal y un único acento rojo que se
+   reserva para lo importante (números de sección, botón principal, hover).
 
    Aquí viven solo los tokens, la base y las utilidades compartidas.
    Los estilos de cada pieza (cabecera, tarjeta, pie...) están en su componente. */
@@ -7,23 +8,39 @@
 /* ---------- tokens ---------- */
 
 :root {
-  --paper: #f2f0eb;
-  --ink: #111111;
-  --ink-soft: #4a4a4a;
-  --rule: #111111;
+  --paper: #f3f1ec;
+  /* fondo de las secciones alternas (bandas) */
+  --paper-alt: #e9e6de;
+  /* velo al pasar por encima de una tarjeta; sirve sobre cualquier banda */
+  --hover: color-mix(in srgb, var(--ink) 5%, transparent);
+  --ink: #1b1b1a;
+  --ink-soft: #55534f;
+  /* texto secundario y separadores: barras, viñetas, números de tarjeta */
+  --ink-faint: #7a766e;
+  /* regla fuerte (bajo los títulos de sección) y regla fina (filas, tarjetas) */
+  --rule: #1b1b1a;
+  --rule-soft: #d9d5cc;
   --red: #e3211b;
-  --rule-w: 3px;
+  --red-strong: #c01a15;
+  /* texto sobre fondo rojo */
+  --on-red: #ffffff;
+  --rule-w: 1px;
   --gutter: 1.5rem;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #111111;
-    --ink: #f2f0eb;
-    --ink-soft: #b5b2ab;
-    --rule: #f2f0eb;
+    --paper: #171614;
+    --paper-alt: #1f1e1b;
+    --ink: #e8e5de;
+    --ink-soft: #aaa69d;
+    --ink-faint: #75716a;
+    --rule: #e8e5de;
+    --rule-soft: #34322e;
     --red: #ff3b30;
+    --red-strong: #ff6a61;
+    --on-red: #171614;
   }
 }
 
@@ -34,6 +51,8 @@
 }
 
 html {
+  /* la cabecera es fija: los anclajes (#projects...) paran justo debajo de ella */
+  scroll-padding-top: 3.9rem;
   font-family: 'Archivo Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: var(--paper);
   color: var(--ink);
@@ -85,19 +104,72 @@ a {
   column-gap: var(--gutter);
 }
 
-/* etiqueta pequeña en mayúsculas, típica de la escuela suiza */
+/* texto pequeño de apoyo: etiquetas, fechas, navegación, tecnologías */
 .label {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* número de sección ("02 — Proyectos"): lo único en versalitas, como guiño
+   a la escuela suiza */
+.index {
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* lista en línea con barras finas entre elementos: etiquetas, tecnologías.
+   La barra cuelga del final de cada elemento, así al saltar de línea queda
+   al final de la línea y no al principio de la siguiente. */
+.slashes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.slashes > li:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.6rem;
+  color: var(--ink-faint);
+}
+
+/* botón de borde fino; .btn-primary va relleno de rojo */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.05rem;
+  border: 1px solid var(--rule);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn-primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--on-red);
+}
+
+.btn-primary:hover {
+  background: var(--red-strong);
+  border-color: var(--red-strong);
+  color: var(--on-red);
 }
 
 /* ---------- hero (portada y páginas interiores) ---------- */
 
 .hero {
   padding: 5rem 0 4rem;
-  border-bottom: 1px solid var(--rule);
 }
 
 .hero .index {
@@ -111,11 +183,10 @@ a {
   grid-column: 3 / span 8;
   grid-row: 1;
   margin: 0;
-  font-size: clamp(2.75rem, 9vw, 7.5rem);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+  font-size: clamp(2.75rem, 7vw, 5.75rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
 }
 
 .hero h1 em {
@@ -123,32 +194,24 @@ a {
   color: var(--red);
 }
 
-/* bloque constructivista: cuadrado rojo en la última columna. En pantallas
-   estrechas es la puerta al libro de visitas (.mark-door); en las anchas la
-   puerta vive en el margen y aquí queda un cuadrado liso (.mark-plain). */
+/* En pantallas estrechas, un cuadrado rojo pequeño en la última columna es la
+   puerta al libro de visitas. En las anchas la puerta vive en el margen
+   (MarginField) y aquí no hay nada. */
 .hero .mark {
   grid-column: 11 / span 2;
   grid-row: 1;
   align-self: start;
   justify-self: end;
   width: 100%;
-  max-width: 7.5rem;
+  max-width: 4.5rem;
   aspect-ratio: 1;
-}
-
-.hero .mark-plain {
-  display: none;
-  background: var(--red);
+  margin-top: 0.6rem;
 }
 
 /* Especificidad extra: el componente Door fija display: block con estilo propio */
 @media (min-width: 100rem) {
   .hero .mark.mark-door {
     display: none;
-  }
-
-  .hero .mark.mark-plain {
-    display: block;
   }
 }
 
@@ -161,15 +224,47 @@ a {
   color: var(--ink-soft);
 }
 
+/* botones del hero (CV, email) y franja de datos rápidos (componente Facts) */
+.hero .actions {
+  grid-column: 3 / -1;
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.hero .facts {
+  grid-column: 3 / -1;
+  grid-row: 4;
+}
+
 /* ---------- cabeceras de sección ---------- */
 
 .section {
-  padding: 3rem 0 0;
+  position: relative;
+  padding: 3.5rem 0 4rem;
+}
+
+/* Bandas alternas: las secciones pares llevan un fondo un poco más oscuro
+   (más claro en modo oscuro) que ocupa la columna central y su margen
+   interior, sin salirse a los márgenes de la ventana. El hero cuenta como
+   primera sección. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(-1 * var(--gutter));
+  z-index: -1;
+  background: var(--band, transparent);
+}
+
+.section:nth-of-type(even) {
+  --band: var(--paper-alt);
 }
 
 .section-head {
   align-items: baseline;
-  padding-bottom: 1rem;
+  padding-bottom: 0.9rem;
   border-bottom: var(--rule-w) solid var(--rule);
 }
 
@@ -181,15 +276,19 @@ a {
 .section-head h2 {
   grid-column: 3 / span 10;
   margin: 0;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* ---------- móvil: todo a una columna ---------- */
 
 @media (max-width: 40rem) {
+  /* en móvil la cabecera tiene dos filas */
+  html {
+    scroll-padding-top: 5.75rem;
+  }
+
   /* El hero pasa a dos columnas: nombre a la izquierda, cuadrado a la derecha */
   .hero {
     padding: 3rem 0 2.5rem;
@@ -198,6 +297,8 @@ a {
 
   .hero .index,
   .hero p,
+  .hero .actions,
+  .hero .facts,
   .section-head .index,
   .section-head h2 {
     grid-column: 1 / -1;
@@ -222,7 +323,8 @@ a {
   .hero .mark {
     grid-column: 2;
     grid-row: 2;
-    width: 6.5rem;
+    width: 3.5rem;
     max-width: none;
+    margin-top: 0.25rem;
   }
 }

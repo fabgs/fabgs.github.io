@@ -1,0 +1,21 @@
+---
+/**
+ * Sección de la portada: cabecera con índice y título sobre la regla gruesa,
+ * y el contenido debajo. El id es el ancla de la navegación.
+ */
+interface Props {
+  id: string;
+  index: string;
+  title: string;
+}
+
+const { id, index, title } = Astro.props;
+---
+
+<section class="section" id={id}>
+  <header class="section-head grid-12">
+    <span class="index label">{index}</span>
+    <h2>{title}</h2>
+  </header>
+  <slot />
+</section>

@@ -1,0 +1,174 @@
+---
+/**
+ * Lista de entradas de experiencia o formación. Cada entrada sigue la rejilla
+ * de la portada: fechas y lugar en las dos primeras columnas, el resto
+ * alineado con los títulos de sección.
+ */
+import type { Entry } from '../data/cv';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  entries: Entry[];
+  lang: Lang;
+}
+
+const { entries, lang } = Astro.props;
+const hrefOf = (href: string | Record<Lang, string>) => (typeof href === 'string' ? href : href[lang]);
+---
+
+<ol class="entries">
+  {
+    entries.map((e) => (
+      <li class="entry grid-12">
+        <p class="when label">
+          <span>{e.period[lang]}</span>
+          <span class="place">{e.place[lang]}</span>
+        </p>
+        <div class="what">
+          <h3>
+            {e.href ? (
+              <a href={e.href} target="_blank" rel="noopener">
+                {e.title[lang]}
+              </a>
+            ) : (
+              e.title[lang]
+            )}
+          </h3>
+          <p class="subtitle">{e.subtitle[lang]}</p>
+          <ul class="points">
+            {e.points[lang].map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+          {e.tags && (
+            <ul class="slashes label">
+              {e.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          )}
+          {e.links && (
+            <ul class="links">
+              {e.links.map((l) => (
+                <li>
+                  <a class="btn" href={hrefOf(l.href)} target="_blank" rel="noopener">
+                    {l.label[lang]} →
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .entry {
+    padding: 1.75rem 0 2rem;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .when {
+    grid-column: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin: 0;
+    padding-top: 0.35rem;
+  }
+
+  .place {
+    color: var(--ink-faint);
+  }
+
+  .what {
+    grid-column: 3 / -1;
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h3 a {
+    transition: color 0.15s;
+  }
+
+  h3 a:hover {
+    color: var(--red);
+  }
+
+  .subtitle {
+    margin: -0.5rem 0 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .slashes {
+    color: var(--ink-soft);
+  }
+
+  .points {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: 44rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* viñeta: un cuadrado pequeño y discreto, el motivo del resto del sitio */
+  .points li {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+
+  .points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 0.3rem;
+    height: 0.3rem;
+    background: var(--ink-faint);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 40rem) {
+    .when,
+    .what {
+      grid-column: 1 / -1;
+    }
+
+    .when {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.25rem 1rem;
+      padding: 0 0 0.75rem;
+    }
+  }
+</style>

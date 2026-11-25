@@ -28,11 +28,10 @@ const t = useTranslations(lang);
 </Base>
 
 <style>
-  /* Sin cuadrado a la derecha, el titular puede ocupar toda la rejilla.
-     Talla algo menor para que palabras largas como GUESTBOOK no se partan. */
+  /* Sin cuadrado a la derecha, el titular puede ocupar toda la rejilla. */
   .hero h1 {
     grid-column: 3 / -1;
-    font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+    font-size: clamp(2.5rem, 7vw, 5.75rem);
     white-space: pre-line; /* respeta el salto de línea de la traducción */
   }
 
@@ -47,8 +46,8 @@ const t = useTranslations(lang);
     margin-right: 0.35rem;
     padding: 0.05rem 0.45rem;
     background: var(--red);
-    color: #fff;
-    font-weight: 700;
+    color: var(--on-red);
+    font-weight: 600;
   }
 
   .back {
@@ -56,7 +55,7 @@ const t = useTranslations(lang);
   }
 
   .back a {
-    border-bottom: 2px solid var(--red);
+    border-bottom: 1px solid var(--red);
     padding-bottom: 0.15rem;
   }
 </style>

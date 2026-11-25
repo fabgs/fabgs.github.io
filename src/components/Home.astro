@@ -4,7 +4,14 @@ import Base from '../layouts/Base.astro';
 import ProjectCard from './ProjectCard.astro';
 import MarginField from './MarginField.astro';
 import Door from './Door.astro';
+import Section from './Section.astro';
+import Facts from './Facts.astro';
+import Entries from './Entries.astro';
+import Skills from './Skills.astro';
+import Contact from './Contact.astro';
+import About from './About.astro';
 import { projects } from '../data/projects';
+import { experience, education } from '../data/cv';
 import { site } from '../config/site';
 import { useTranslations, type Lang } from '../i18n/ui';
 
@@ -21,20 +28,39 @@ const t = useTranslations(lang);
     <span class="index label">{t('hero.index')}</span>
     <h1>Fabián<br />Godoy<em>.</em></h1>
     <Door class="mark mark-door" href={getRelativeLocaleUrl(lang, 'guestbook')} label={t('guestbook.title')} />
-    <span class="mark mark-plain" aria-hidden="true"></span>
     <p>{t('hero.tagline')}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={site.cv} target="_blank" rel="noopener">{t('hero.cv')} ↓</a>
+      <a class="btn" href={`mailto:${site.email}`}>{t('hero.email')} →</a>
+    </div>
+    <Facts lang={lang} />
   </section>
 
-  <section class="section" id="projects">
-    <header class="section-head grid-12">
-      <span class="index label">{t('projects.index')}</span>
-      <h2>{t('projects.title')}</h2>
-    </header>
-
+  <Section id="projects" index={t('projects.index')} title={t('projects.title')}>
     <div class="projects">
       {projects.map((p, i) => <ProjectCard project={p} lang={lang} index={i + 1} />)}
     </div>
-  </section>
+  </Section>
+
+  <Section id="experience" index={t('experience.index')} title={t('experience.title')}>
+    <Entries entries={experience} lang={lang} />
+  </Section>
+
+  <Section id="skills" index={t('skills.index')} title={t('skills.title')}>
+    <Skills lang={lang} />
+  </Section>
+
+  <Section id="education" index={t('education.index')} title={t('education.title')}>
+    <Entries entries={education} lang={lang} />
+  </Section>
+
+  <Section id="about" index={t('about.index')} title={t('about.title')}>
+    <About lang={lang} />
+  </Section>
+
+  <Section id="contact" index={t('contact.index')} title={t('contact.title')}>
+    <Contact lang={lang} />
+  </Section>
 
   <MarginField lang={lang} />
 </Base>
@@ -42,18 +68,19 @@ const t = useTranslations(lang);
 <style>
   /* Dos columnas en escritorio, una en móvil. Las reglas verticales se dibujan
      con bordes en las tarjetas impares para que las celdas vacías queden limpias. */
+  /* minmax(0, 1fr): las columnas no se estiran al ancho de las capturas */
   .projects {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .projects > :global(.card:nth-child(odd)) {
-    border-right: 1px solid var(--rule);
+    border-right: 1px solid var(--rule-soft);
   }
 
   @media (max-width: 48rem) {
     .projects {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .projects > :global(.card:nth-child(odd)) {
