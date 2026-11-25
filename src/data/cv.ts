@@ -33,6 +33,12 @@ export const facts: Fact[] = [
   },
 ];
 
+/** Un enlace externo; la URL puede cambiar según el idioma */
+export interface EntryLink {
+  label: Localized;
+  href: string | Localized;
+}
+
 /** Una entrada de experiencia o de formación */
 export interface Entry {
   /** Empresa, organización o universidad */
@@ -44,6 +50,8 @@ export interface Entry {
   place: Localized;
   points: LocalizedList;
   tags?: string[];
+  /** Botones al pie de la entrada: una noticia, una web... */
+  links?: EntryLink[];
 }
 
 export const experience: Entry[] = [
@@ -80,16 +88,30 @@ export const experience: Entry[] = [
     points: {
       en: [
         'Co-lead a student rocketry team: coordinating members and planning project milestones.',
+        "Designed, built and flew Lucentum with the team, the club's first high-power rocket: structure, 3D-printed parts, parachute and onboard electronics, all made in-house.",
+        'Lucentum reached 459 m at the SURTAM and SpainRocketry L1 Competition (Alcolea de Cinca, Huesca, November 2026), the first university rocketry competition in Spain. It was recovered intact, and the flight earned Tripoli L1 certification.',
         "Run the flight simulations of the club's MT1 rocket with RocketPy.",
         'Member of the MultitecUA technology community since November 2024; judge at a university game jam.',
       ],
       es: [
         'Codirijo un equipo de cohetería de estudiantes: coordino a los miembros y planifico los hitos del proyecto.',
+        'Diseñamos, construimos y lanzamos en equipo Lucentum, el primer cohete de alta potencia del club: estructura, piezas impresas en 3D, paracaídas y electrónica de a bordo, todo hecho por nosotros.',
+        'Lucentum llegó a 459 m en la Competición L1 de SURTAM y SpainRocketry (Alcolea de Cinca, Huesca, noviembre de 2026), la primera competición universitaria de cohetería de España. Se recuperó intacto y el vuelo obtuvo la certificación L1 de Tripoli.',
         'Hago las simulaciones de vuelo del cohete MT1 del club con RocketPy.',
         'Miembro de la comunidad tecnológica MultitecUA desde noviembre de 2024; jurado en una game jam universitaria.',
       ],
     },
     tags: ['Python', 'RocketPy'],
+    links: [
+      {
+        label: { en: 'Launch on LinkedIn', es: 'El lanzamiento en LinkedIn' },
+        href: 'https://www.linkedin.com/posts/fabian-godoy-silvestre_activity-7529922589255802880-a6iw',
+      },
+      {
+        label: { en: 'Team website', es: 'Web del equipo' },
+        href: { en: 'https://cohetes.multitecua.com/en/', es: 'https://cohetes.multitecua.com/' },
+      },
+    ],
   },
 ];
 
@@ -115,6 +137,23 @@ export const education: Entry[] = [
     },
   },
 ];
+
+/**
+ * Sobre mí, un párrafo por elemento. Los dos primeros son el "Acerca de" de
+ * LinkedIn; el último cuenta de dónde salen algunos proyectos.
+ */
+export const about: LocalizedList = {
+  en: [
+    'Software engineer recently graduated from the University of Alicante, with experience in real-world projects and startup environments.',
+    "I've worked on mobile and web applications, focusing on clean architecture, design patterns and continuous improvement. I'm interested in full-stack development, software architecture and building scalable products.",
+    "Outside work I debate with the Alicante Debate Association and co-direct MultitecUA's rocketry club. Several of the projects above were born there, like the debate timer and the AI debate tournament.",
+  ],
+  es: [
+    'Ingeniero de software recién graduado por la Universidad de Alicante, con experiencia en proyectos reales y en entornos de startup.',
+    'He trabajado en aplicaciones móviles y web, con foco en la arquitectura limpia, los patrones de diseño y la mejora continua. Me interesan el desarrollo full-stack, la arquitectura de software y construir productos escalables.',
+    'Fuera del trabajo debato en la Asociación de Debate de Alicante y codirijo el club de cohetería de MultitecUA. De ahí salen varios de los proyectos de arriba, como el cronómetro de debate y el torneo de agentes.',
+  ],
+};
 
 /** Un elemento de habilidad: el nombre propio de una tecnología o un texto traducido */
 export type Skill = string | Localized;

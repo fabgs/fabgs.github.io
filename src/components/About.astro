@@ -1,0 +1,112 @@
+---
+/**
+ * Sobre mí: la foto y unos párrafos. La foto va en blanco y negro para no
+ * competir con el único acento rojo del sitio, y recupera el color al pasar
+ * por encima.
+ */
+import { Picture } from 'astro:assets';
+import photo from '../assets/fabian.jpg';
+import { about } from '../data/cv';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="about grid-12">
+  <figure class="photo">
+    <Picture
+      src={photo}
+      alt={t('about.photo')}
+      formats={['avif', 'webp']}
+      widths={[300, 450, 600]}
+      sizes="(max-width: 40rem) 70vw, 18rem"
+      loading="lazy"
+    />
+  </figure>
+  <div class="text">
+    {about[lang].map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+</div>
+
+<style>
+  .about {
+    /* abajo deja sitio al cuadrado rojo, que asoma 1rem bajo la foto */
+    padding: 2.5rem 0 1.5rem;
+    row-gap: 2rem;
+    align-items: start;
+  }
+
+  .photo {
+    grid-column: 3 / span 3;
+    position: relative;
+    margin: 0;
+  }
+
+  /* cuadrado rojo que asoma por detrás de la esquina, como el del hero */
+  .photo::before {
+    content: '';
+    position: absolute;
+    right: -1rem;
+    bottom: -1rem;
+    width: 45%;
+    aspect-ratio: 1;
+    background: var(--red);
+  }
+
+  .photo :global(img) {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.3s;
+  }
+
+  .photo:hover :global(img) {
+    filter: none;
+  }
+
+  .text {
+    grid-column: 7 / -1;
+    display: grid;
+    gap: 1rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 36rem;
+  }
+
+  p:first-child {
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  @media (max-width: 48rem) {
+    .photo {
+      grid-column: 1 / span 6;
+    }
+
+    .text {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .photo {
+      grid-column: 1 / span 9;
+      max-width: 18rem;
+    }
+  }
+</style>

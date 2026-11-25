@@ -9,6 +9,7 @@ import Facts from './Facts.astro';
 import Entries from './Entries.astro';
 import Skills from './Skills.astro';
 import Contact from './Contact.astro';
+import About from './About.astro';
 import { projects } from '../data/projects';
 import { experience, education } from '../data/cv';
 import { site } from '../config/site';
@@ -29,6 +30,10 @@ const t = useTranslations(lang);
     <Door class="mark mark-door" href={getRelativeLocaleUrl(lang, 'guestbook')} label={t('guestbook.title')} />
     <span class="mark mark-plain" aria-hidden="true"></span>
     <p>{t('hero.tagline')}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={site.cv} target="_blank" rel="noopener">{t('hero.cv')} ↓</a>
+      <a class="btn" href={`mailto:${site.email}`}>{t('hero.email')} →</a>
+    </div>
     <Facts lang={lang} />
   </section>
 
@@ -48,6 +53,10 @@ const t = useTranslations(lang);
 
   <Section id="education" index={t('education.index')} title={t('education.title')}>
     <Entries entries={education} lang={lang} />
+  </Section>
+
+  <Section id="about" index={t('about.index')} title={t('about.title')}>
+    <About lang={lang} />
   </Section>
 
   <Section id="contact" index={t('contact.index')} title={t('contact.title')}>

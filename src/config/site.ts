@@ -7,6 +7,9 @@ export const site = {
   domain: 'fabgs.dev',
   url: 'https://fabgs.dev',
   repo: 'https://github.com/fabgs/fabgs.github.io',
+  email: 'fabgodsil@gmail.com',
+  /** CV en PDF, servido desde public/cv/ (el mismo que en LinkedIn) */
+  cv: '/cv/CV_Fabian_Godoy_Silvestre.pdf',
 } as const;
 
 export interface SocialLink {

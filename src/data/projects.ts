@@ -88,6 +88,16 @@ export const projects: Project[] = [
     repos: [{ href: 'https://github.com/fabgs/torneo-agentes-debate' }],
   },
   {
+    slug: 'asistente-entrenamiento',
+    title: { en: 'Workout Assistant', es: 'Asistente de entrenamiento' },
+    description: {
+      en: 'Personal workout app for Android and iPhone. Automatic load progression, rest timers that ring with the phone locked, an offline daily reminder, and a profile that works out calories and macros for the diet plan. Everything stays on the phone in SQLite, and the iPhone build comes from GitHub Actions, without a Mac.',
+      es: 'App personal de entrenamiento para Android e iPhone. Progresión automática de cargas, descansos que suenan con el móvil bloqueado, recordatorio diario sin conexión y un perfil que calcula calorías y macros para el plan de dieta. Todo se guarda en el móvil con SQLite, y la versión de iPhone se compila en GitHub Actions, sin Mac.',
+    },
+    tags: ['React Native', 'Expo', 'TypeScript', 'SQLite', 'Jest'],
+    repos: [{ href: 'https://github.com/fabgs/asistente-entrenamiento' }],
+  },
+  {
     slug: 'guitar-tabs',
     title: { en: 'Guitar Tabs', es: 'Guitar Tabs' },
     description: {

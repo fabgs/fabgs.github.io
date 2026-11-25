@@ -1,6 +1,6 @@
 ---
-/** Cierre de la portada: qué busco y los enlaces de contacto (los de site.ts). */
-import { socialLinks } from '../config/site';
+/** Cierre de la portada: qué busco, el email bien grande y el resto de enlaces. */
+import { site, socialLinks } from '../config/site';
 import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -13,11 +13,17 @@ const t = useTranslations(lang);
 
 <div class="contact grid-12">
   <p>{t('contact.text')}</p>
-  <ul class="links label">
+  <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+  <ul class="links">
+    <li>
+      <a class="btn btn-primary" href={site.cv} target="_blank" rel="noopener">
+        {t('contact.cv')} ↓
+      </a>
+    </li>
     {
       socialLinks.map((s) => (
         <li>
-          <a href={s.href} target="_blank" rel="me noopener">
+          <a class="btn" href={s.href} target="_blank" rel="me noopener">
             {s.label} →
           </a>
         </li>
@@ -29,7 +35,7 @@ const t = useTranslations(lang);
 <style>
   .contact {
     padding: 2rem 0 0;
-    row-gap: 1.75rem;
+    row-gap: 1.5rem;
   }
 
   p {
@@ -41,31 +47,36 @@ const t = useTranslations(lang);
     letter-spacing: -0.015em;
   }
 
+  .email {
+    grid-column: 3 / -1;
+    justify-self: start;
+    max-width: 100%;
+    font-size: clamp(1.5rem, 5vw, 3.25rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+    border-bottom: var(--rule-w) solid var(--red);
+    transition: color 0.15s;
+  }
+
+  .email:hover {
+    color: var(--red);
+  }
+
   .links {
     grid-column: 3 / -1;
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
     list-style: none;
-    margin: 0;
+    margin: 0.5rem 0 0;
     padding: 0;
-  }
-
-  a {
-    display: inline-block;
-    padding: 0.6rem 1rem;
-    border: 2px solid currentColor;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
-  }
-
-  a:hover {
-    background: var(--red);
-    border-color: var(--red);
-    color: #fff;
   }
 
   @media (max-width: 40rem) {
     p,
+    .email,
     .links {
       grid-column: 1 / -1;
     }
