@@ -89,19 +89,19 @@ export const experience: Entry[] = [
       en: [
         'Co-lead a student rocketry team: coordinating members and planning project milestones.',
         "Designed, built and flew Lucentum with the team, the club's first high-power rocket: structure, 3D-printed parts, parachute and onboard electronics, all made in-house.",
+        'Responsible for the design in OpenRocket and for purchasing the materials.',
         'Lucentum reached 459 m at the SURTAM and SpainRocketry L1 Competition (Alcolea de Cinca, Huesca, November 2026), the first university rocketry competition in Spain. It was recovered intact, and the flight earned Tripoli L1 certification.',
-        "Run the flight simulations of the club's MT1 rocket with RocketPy.",
         'Member of the MultitecUA technology community since November 2024; judge at a university game jam.',
       ],
       es: [
         'Codirijo un equipo de cohetería de estudiantes: coordino a los miembros y planifico los hitos del proyecto.',
         'Diseñamos, construimos y lanzamos en equipo Lucentum, el primer cohete de alta potencia del club: estructura, piezas impresas en 3D, paracaídas y electrónica de a bordo, todo hecho por nosotros.',
+        'Me he encargado del diseño en OpenRocket y de la compra de materiales.',
         'Lucentum llegó a 459 m en la Competición L1 de SURTAM y SpainRocketry (Alcolea de Cinca, Huesca, noviembre de 2026), la primera competición universitaria de cohetería de España. Se recuperó intacto y el vuelo obtuvo la certificación L1 de Tripoli.',
-        'Hago las simulaciones de vuelo del cohete MT1 del club con RocketPy.',
         'Miembro de la comunidad tecnológica MultitecUA desde noviembre de 2024; jurado en una game jam universitaria.',
       ],
     },
-    tags: ['Python', 'RocketPy'],
+    tags: ['OpenRocket'],
     links: [
       {
         label: { en: 'Launch on LinkedIn', es: 'El lanzamiento en LinkedIn' },
@@ -208,8 +208,8 @@ export const skills: SkillGroup[] = [
     items: [
       { en: 'Agile (Scrum, Kanban)', es: 'Ágil (Scrum, Kanban)' },
       {
-        en: 'Spec-driven development with AI assistants (OpenSpec)',
-        es: 'Desarrollo guiado por especificaciones con asistentes de IA (OpenSpec)',
+        en: 'Spec-driven development with AI assistants',
+        es: 'Desarrollo guiado por especificaciones con asistentes de IA',
       },
     ],
   },
