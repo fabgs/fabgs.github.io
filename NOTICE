@@ -7,6 +7,10 @@ The written content about me (biography, experience, education, skills and
 project descriptions), my photo (src/assets/fabian.jpg) and my CV
 (public/cv/) are not covered by that license. All rights reserved.
 
+Project images (src/assets/projects/)
+  Screenshots of each project's own interface. The ADA name and logo shown in
+  cronometro-ada.webp belong to the Asociación de Debate de Alicante.
+
 Archivo (font)
   Bundled into the built site through @fontsource-variable/archivo.
   Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)

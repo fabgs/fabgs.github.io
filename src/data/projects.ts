@@ -1,4 +1,12 @@
+import type { ImageMetadata } from 'astro';
 import type { Localized } from '../i18n/ui';
+import tpvImg from '../assets/projects/tpv-virtual.webp';
+import sarenvImg from '../assets/projects/sarenv-swarm.webp';
+import cronometroImg from '../assets/projects/cronometro-ada.webp';
+import boidsImg from '../assets/projects/boids.webp';
+import torneoImg from '../assets/projects/torneo-agentes-debate.webp';
+import asistenteImg from '../assets/projects/asistente-entrenamiento.webp';
+import guitarImg from '../assets/projects/guitar-tabs.webp';
 
 export interface RepoLink {
   /** Texto del botón. Si se omite se usa "Código" traducido. */
@@ -13,6 +21,11 @@ export interface Project {
   /** En proyectos de equipo: qué hice yo. Se muestra bajo la descripción. */
   role?: Localized;
   tags: string[];
+  /**
+   * Imagen de la tarjeta, en 16:10 (src/assets/projects/<slug>.webp): una
+   * captura de la demo, o lo más parecido si no la hay.
+   */
+  image?: { src: ImageMetadata; alt: Localized };
   /**
    * URL de la demo. Relativa ("/boids/") si vive bajo fabgs.dev como project
    * site de GitHub Pages; absoluta si está alojada fuera. Sin ella, la tarjeta
@@ -38,6 +51,7 @@ export const projects: Project[] = [
       es: 'Proyecto en equipo (4 estudiantes) de la asignatura Ingeniería Web. Escribí la mayor parte del código.',
     },
     tags: ['Vue 3', 'Spring Boot', 'Java', 'MySQL', 'Redis', 'JWT'],
+    image: { src: tpvImg, alt: { en: 'TPV Virtual landing page', es: 'Portada de TPV Virtual' } },
     live: 'https://tpv-frontend.vercel.app/',
     repos: [
       { label: 'Frontend', href: 'https://github.com/fabgs/tpv-frontend' },
@@ -52,6 +66,13 @@ export const projects: Project[] = [
       es: 'Trabajo de fin de grado. Extiende el framework de búsqueda y rescate SARenv con un módulo de enjambre descentralizado y bioinspirado para equipos heterogéneos de drones y robots terrestres, con visualización 3D en GAMA.',
     },
     tags: ['Python', 'Multi-agent', 'UAV', 'GAMA Platform'],
+    image: {
+      src: sarenvImg,
+      alt: {
+        en: 'Swarm simulation in GAMA: the robots’ trails spread out from the base among the victims',
+        es: 'Simulación del enjambre en GAMA: los rastros de los robots se extienden desde la base entre las víctimas',
+      },
+    },
     repos: [{ href: 'https://github.com/fabgs/SARenv-swarm' }],
   },
   {
@@ -62,6 +83,13 @@ export const projects: Project[] = [
       es: 'Cronómetro para debates de la Asociación de Debate de Alicante. Formatos académico y parlamentario británico, tiempos configurables, navegación por fases y manejo por teclado.',
     },
     tags: ['JavaScript', 'Vite', 'Vitest', 'PWA'],
+    image: {
+      src: cronometroImg,
+      alt: {
+        en: 'ADA Debate Timer showing 4:00 for the first speech',
+        es: 'Cronómetro ADA con 4:00 en la primera intervención',
+      },
+    },
     live: '/cronometro-ada/',
     repos: [{ href: 'https://github.com/fabgs/cronometro-ada' }],
   },
@@ -73,6 +101,7 @@ export const projects: Project[] = [
       es: 'Simulador de bandadas en tiempo real escrito en C con raylib. Miles de agentes gracias a una rejilla espacial, multihilo y renderizado instanciado en GPU. Compilado a WebAssembly.',
     },
     tags: ['C', 'raylib', 'WebAssembly', 'OpenMP', 'GLSL'],
+    image: { src: boidsImg, alt: { en: 'Thousands of boids in the 3D simulator', es: 'Miles de boids en el simulador 3D' } },
     live: '/boids/',
     repos: [{ href: 'https://github.com/fabgs/boids' }],
   },
@@ -84,6 +113,13 @@ export const projects: Project[] = [
       es: 'Torneos entre equipos de agentes de IA que debaten en el Formato Académico de la Asociación de Debate de Alicante, puntuados por jueces también agentes con la hoja oficial y generados con mi adaptación de DeepDebater. Cada debate se reproduce en una sala animada con una voz por orador, junto a la clasificación y un banco de evidencias con buscador.',
     },
     tags: ['Python', 'AG2', 'Multi-agent', 'LLM', 'JavaScript', 'Web Speech API'],
+    image: {
+      src: torneoImg,
+      alt: {
+        en: 'Pixel-art debate room with both teams, the clock and the judges',
+        es: 'Sala de debate en pixel art con los dos equipos, el reloj y el jurado',
+      },
+    },
     live: '/torneo-agentes-debate/',
     repos: [{ href: 'https://github.com/fabgs/torneo-agentes-debate' }],
   },
@@ -95,6 +131,7 @@ export const projects: Project[] = [
       es: 'App personal de entrenamiento para Android e iPhone. Progresión automática de cargas, descansos que suenan con el móvil bloqueado, recordatorio diario sin conexión y un perfil que calcula calorías y macros para el plan de dieta. Todo se guarda en el móvil con SQLite, y la versión de iPhone se compila en GitHub Actions, sin Mac.',
     },
     tags: ['React Native', 'Expo', 'TypeScript', 'SQLite', 'Jest'],
+    image: { src: asistenteImg, alt: { en: 'App icon', es: 'Icono de la app' } },
     repos: [{ href: 'https://github.com/fabgs/asistente-entrenamiento' }],
   },
   {
@@ -105,6 +142,13 @@ export const projects: Project[] = [
       es: 'Reproductor de tablaturas de guitarra. Lee tabs en texto plano, deduce el ritmo, los acordes y la digitación de las dos manos, y los toca con cuerdas sintetizadas al tempo que quieras. El modo práctica escucha por el micrófono y solo avanza cuando tocas las notas correctas. Incluye afinador.',
     },
     tags: ['JavaScript', 'Web Audio API', 'YIN', 'Karplus-Strong'],
+    image: {
+      src: guitarImg,
+      alt: {
+        en: 'Tab player with the fingering, chord diagrams and the tuner',
+        es: 'Reproductor de tabs con la digitación, los diagramas de acordes y el afinador',
+      },
+    },
     live: '/guitar-tabs/',
     repos: [{ href: 'https://github.com/fabgs/guitar-tabs' }],
   },

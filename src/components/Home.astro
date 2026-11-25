@@ -68,9 +68,10 @@ const t = useTranslations(lang);
 <style>
   /* Dos columnas en escritorio, una en móvil. Las reglas verticales se dibujan
      con bordes en las tarjetas impares para que las celdas vacías queden limpias. */
+  /* minmax(0, 1fr): las columnas no se estiran al ancho de las capturas */
   .projects {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .projects > :global(.card:nth-child(odd)) {
@@ -79,7 +80,7 @@ const t = useTranslations(lang);
 
   @media (max-width: 48rem) {
     .projects {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .projects > :global(.card:nth-child(odd)) {

@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { Project } from '../data/projects';
 import { useTranslations, type Lang } from '../i18n/ui';
 
@@ -24,6 +25,18 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
 ---
 
 <article class="card">
+  {
+    project.image && (
+      <Image
+        class="shot"
+        src={project.image.src}
+        alt={project.image.alt[lang]}
+        widths={[480, 800, 1280]}
+        sizes="(max-width: 48rem) 100vw, 36rem"
+        loading="lazy"
+      />
+    )
+  }
   <span class="index label">{String(index).padStart(2, '0')}</span>
   <h3>
     <a
@@ -64,10 +77,14 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
 </article>
 
 <style>
+  /* En columna: la descripción crece y empuja etiquetas y pie hacia abajo,
+     así el pie queda alineado entre las dos tarjetas de una fila. */
   .card {
     position: relative;
-    display: grid;
-    grid-template-rows: auto auto 1fr auto auto;
+    display: flex;
+    flex-direction: column;
+    /* sin esto, la tarjeta crecería hasta el ancho original de su captura */
+    min-width: 0;
     gap: 1rem;
     padding: 1.5rem var(--gutter) 1.75rem;
     border-bottom: 1px solid var(--rule-soft);
@@ -108,7 +125,19 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     z-index: 1;
   }
 
+  /* Captura de la demo, siempre en 16:10 */
+  .shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border: 1px solid var(--rule-soft);
+    margin-bottom: 0.25rem;
+  }
+
   .body {
+    flex: 1;
     display: grid;
     align-content: start;
     gap: 0.75rem;
