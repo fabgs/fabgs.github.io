@@ -16,6 +16,7 @@ export const ui = {
   en: {
     'meta.description':
       'Fabián Godoy, software engineer: projects, experience and skills.',
+    'meta.ogAlt': 'Fabián Godoy, software engineer: name, photo and fabgs.dev',
     'nav.projects': 'Projects',
     'nav.experience': 'Experience',
     'nav.about': 'About',
@@ -23,7 +24,7 @@ export const ui = {
     'nav.language': 'Language',
     'hero.index': '01 — Portfolio',
     'hero.tagline':
-      'Software engineer, backend-leaning. Computer Engineering graduate from the University of Alicante, with a six-month internship shipping production mobile and web features.',
+      'Software engineer, backend-leaning. Computer Science Engineering graduate from the University of Alicante, with a six-month internship shipping production mobile and web features.',
     'hero.cv': 'Download CV',
     'hero.email': 'Email me',
     'projects.index': '02 — Index',
@@ -59,6 +60,7 @@ export const ui = {
   es: {
     'meta.description':
       'Fabián Godoy, ingeniero de software: proyectos, experiencia y habilidades.',
+    'meta.ogAlt': 'Fabián Godoy, ingeniero de software: nombre, foto y fabgs.dev',
     'nav.projects': 'Proyectos',
     'nav.experience': 'Experiencia',
     'nav.about': 'Sobre mí',

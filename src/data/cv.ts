@@ -120,7 +120,7 @@ export const education: Entry[] = [
     title: { en: 'University of Alicante', es: 'Universidad de Alicante' },
     href: 'https://www.ua.es/',
     subtitle: {
-      en: "Bachelor's Degree in Computer Engineering, Software Engineering track",
+      en: "Bachelor's Degree in Computer Science Engineering, Software Engineering track",
       es: 'Grado en Ingeniería Informática, itinerario de Ingeniería del Software',
     },
     period: { en: 'Sep 2020 — Jul 2026', es: 'sep. 2020 — jul. 2026' },
