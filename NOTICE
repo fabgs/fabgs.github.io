@@ -1,0 +1,12 @@
+fabgs.dev
+Copyright (c) 2026 Fabián Godoy Silvestre
+
+The source code of this site is released under the MIT License (see LICENSE).
+
+The written content about me (biography, experience, education, skills and
+project descriptions) is not covered by that license. All rights reserved.
+
+Archivo (font)
+  Bundled into the built site through @fontsource-variable/archivo.
+  Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
+  License: SIL Open Font License 1.1 (https://openfontlicense.org)
