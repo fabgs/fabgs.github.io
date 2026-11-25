@@ -34,8 +34,17 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
       {project.title[lang]}
     </a>
   </h3>
-  <p>{project.description[lang]}</p>
-  <ul class="tags label">
+  <div class="body">
+    <p>{project.description[lang]}</p>
+    {
+      project.role && (
+        <p class="role">
+          <span class="label">{t('card.role')}</span> {project.role[lang]}
+        </p>
+      )
+    }
+  </div>
+  <ul class="slashes label">
     {project.tags.map((tag) => <li>{tag}</li>)}
   </ul>
   <div class="foot label">
@@ -94,6 +103,12 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     z-index: 1;
   }
 
+  .body {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+  }
+
   p {
     margin: 0;
     color: var(--ink-soft);
@@ -107,19 +122,13 @@ const repoButtons = project.live || project.repos.length > 1 ? project.repos : [
     opacity: 0.8;
   }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.6rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .role {
+    font-size: 0.9rem;
   }
 
-  .tags li + li::before {
-    content: '/';
-    margin-right: 0.6rem;
+  .role .label {
     color: var(--red);
+    margin-right: 0.35rem;
   }
 
   .foot {

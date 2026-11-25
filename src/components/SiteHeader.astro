@@ -20,6 +20,8 @@ const home = getRelativeLocaleUrl(lang, '');
 
     <nav class="nav label">
       <a href={`${home}#projects`}>{t('nav.projects')}</a>
+      <a href={`${home}#experience`}>{t('nav.experience')}</a>
+      <a href={`${home}#contact`}>{t('nav.contact')}</a>
       {
         socialLinks.map((s) => (
           <a href={s.href} rel="me noopener" target="_blank">

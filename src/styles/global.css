@@ -93,6 +93,24 @@ a {
   text-transform: uppercase;
 }
 
+/* lista en línea con barras rojas entre elementos: etiquetas, tecnologías.
+   La barra cuelga del final de cada elemento, así al saltar de línea queda
+   al final de la línea y no al principio de la siguiente. */
+.slashes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.slashes > li:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.6rem;
+  color: var(--red);
+}
+
 /* ---------- hero (portada y páginas interiores) ---------- */
 
 .hero {
@@ -161,6 +179,12 @@ a {
   color: var(--ink-soft);
 }
 
+/* franja de datos rápidos (componente Facts), bajo el titular */
+.hero .facts {
+  grid-column: 3 / -1;
+  grid-row: 3;
+}
+
 /* ---------- cabeceras de sección ---------- */
 
 .section {
@@ -198,6 +222,7 @@ a {
 
   .hero .index,
   .hero p,
+  .hero .facts,
   .section-head .index,
   .section-head h2 {
     grid-column: 1 / -1;

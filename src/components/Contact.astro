@@ -1,0 +1,73 @@
+---
+/** Cierre de la portada: qué busco y los enlaces de contacto (los de site.ts). */
+import { socialLinks } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="contact grid-12">
+  <p>{t('contact.text')}</p>
+  <ul class="links label">
+    {
+      socialLinks.map((s) => (
+        <li>
+          <a href={s.href} target="_blank" rel="me noopener">
+            {s.label} →
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .contact {
+    padding: 2rem 0 0;
+    row-gap: 1.75rem;
+  }
+
+  p {
+    grid-column: 3 / span 7;
+    margin: 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .links {
+    grid-column: 3 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border: 2px solid currentColor;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  a:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+
+  @media (max-width: 40rem) {
+    p,
+    .links {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

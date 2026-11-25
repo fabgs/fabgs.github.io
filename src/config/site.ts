@@ -6,6 +6,7 @@ export const site = {
   name: 'Fabián Godoy',
   domain: 'fabgs.dev',
   url: 'https://fabgs.dev',
+  repo: 'https://github.com/fabgs/fabgs.github.io',
 } as const;
 
 export interface SocialLink {

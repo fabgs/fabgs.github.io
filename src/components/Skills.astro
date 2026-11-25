@@ -1,0 +1,89 @@
+---
+/**
+ * Habilidades por grupos. Lo que solo he usado en asignaturas va aparte, en
+ * gris, para que quede claro qué he usado en trabajo y proyectos reales.
+ */
+import { skills, type Skill } from '../data/cv';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const text = (s: Skill) => (typeof s === 'string' ? s : s[lang]);
+---
+
+<dl class="skills">
+  {
+    skills.map((g) => (
+      <div class="group grid-12">
+        <dt class="label">{g.name[lang]}</dt>
+        <dd>
+          <ul class="slashes">
+            {g.items.map((s) => (
+              <li>{text(s)}</li>
+            ))}
+          </ul>
+          {g.coursework && (
+            <p class="coursework">
+              <span class="label">{t('skills.coursework')}</span>
+              <span>{g.coursework.map(text).join(' · ')}</span>
+            </p>
+          )}
+        </dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .skills {
+    margin: 0;
+  }
+
+  .group {
+    padding: 1.1rem 0 1.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  dt {
+    grid-column: 1 / span 2;
+    padding-top: 0.3rem;
+  }
+
+  dd {
+    grid-column: 3 / -1;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .slashes {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .coursework {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 40rem) {
+    dt,
+    dd {
+      grid-column: 1 / -1;
+    }
+
+    dt {
+      padding: 0 0 0.5rem;
+      color: var(--red);
+    }
+  }
+</style>
