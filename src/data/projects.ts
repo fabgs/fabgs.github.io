@@ -23,7 +23,7 @@ export interface Project {
   tags: string[];
   /**
    * Imagen de la tarjeta, en 16:10 (src/assets/projects/<slug>.webp): una
-   * captura de la demo, o lo más parecido si no la hay.
+   * captura de la demo, o de la app si no tiene demo web.
    */
   image?: { src: ImageMetadata; alt: Localized };
   /**
@@ -131,7 +131,13 @@ export const projects: Project[] = [
       es: 'App personal de entrenamiento para Android e iPhone. Progresión automática de cargas, descansos que suenan con el móvil bloqueado, recordatorio diario sin conexión y un perfil que calcula calorías y macros para el plan de dieta. Todo se guarda en el móvil con SQLite, y la versión de iPhone se compila en GitHub Actions, sin Mac.',
     },
     tags: ['React Native', 'Expo', 'TypeScript', 'SQLite', 'Jest'],
-    image: { src: asistenteImg, alt: { en: 'App icon', es: 'Icono de la app' } },
+    image: {
+      src: asistenteImg,
+      alt: {
+        en: 'Three app screens: today’s plan, the weekly routines and the profile with the muscle map',
+        es: 'Tres pantallas de la app: el plan de hoy, las rutinas de la semana y el perfil con el mapa muscular',
+      },
+    },
     repos: [{ href: 'https://github.com/fabgs/asistente-entrenamiento' }],
   },
   {
